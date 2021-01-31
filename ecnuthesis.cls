@@ -721,7 +721,7 @@
   }
 \keys_set:nn { ecnu / style }
   {
-    logoResource = {./figures/inner-cover(contains_font).eps}
+    logoResource = {./source/inner-cover(contains_font).eps}
   }
 \cs_new_protected:Npn \__ecnu_cover_logo:
   { 

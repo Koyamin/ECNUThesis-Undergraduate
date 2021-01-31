@@ -1,27 +1,99 @@
 \documentclass[printMode]{ecnuthesis}
+% 模版选项:
+% printMode     是否开启打印模式, 若缺省则为关闭, 反之则为开启
+% 用法示例
+% \documentclass[printMode]{ecnuthesis}   (开启打印模式, 适合双面打印)
+% \documentclass[printMode]{ecnuthesis}   (关闭打印模式, 适合提交电子版)
 
-\ecnuSetup
-  {
-    info = {
-      title = {基于微信小程序的线下课程考勤系统的设计与实现},
-      titleEN = {Design and Implementation of Offline Course Attendance System Based on WeChat Mini Program},
-      year  = {2021},
-      month = {5},
-      keywords = {微信小程序, 课堂考勤, Java 语言, My Sql 数据库},
-      keywordsEN = {WeChat Mini Program, Class attendance, Java, My Sql},
-    },
-    style = {
-      footnote  = plain,
-      numbering = chinese,
-      bibResource = {thesis-ref.bib},
-      logoResource = {},
-    }
+\ecnuSetup {
+  % 参数设置
+  % 允许采用两种方式设置选项:
+  %   1. style/... = ...
+  %   2. style = { ... = ... } 
+  % 注意事项: 
+  %   1. 请勿在参数设置中出现空行
+  %   2. "=" 两侧的空格将被忽略
+  %   3. "/" 两侧的空格不会被忽略
+  %   4. 请使用英文逗号 "," 分隔选项
+  %
+  % info 类用于输入论文信息
+  info = {
+    title = {基于微信小程序的线下课程考勤系统的设计与实现},
+    % 中文标题
+    %
+    titleEN = {Design and Implementation of Offline Course Attendance System Based on WeChat Mini Program},
+    % 英文标题
+    %
+    author = {张三},
+    % 作者姓名
+    %
+    studentID = {10000000000},
+    % 作者学号
+    %
+    department = {理工学院},
+    % 学院名称
+    %
+    major = {计算机科学与技术},
+    % 专业名称
+    %
+    supervisor = {李四},
+    % 指导教师姓名
+    %
+    academicTitle = {教授},
+    % 指导教师职称
+    %
+    year  = {2021},
+    % 论文完成年份
+    %
+    month = {5},
+    % 论文完成月份
+    %
+    keywords = {微信小程序, 课堂考勤, Java 语言, My Sql 数据库},
+    % 中文关键词
+    % 请使用英文逗号 "," 以分隔
+    %
+    keywordsEN = {WeChat Mini Program, Class attendance, Java, My Sql},
+    % 英文关键词
+    % 请使用英文逗号 "," 以分隔
+    %
+  },
+  % style 类用于简单设置论文格式
+  style = {
+    footnote  = plain,
+    % 脚注编号样式
+    % 可用选项:
+    %   footnote = plain|circled
+    % 说明:
+    %   plain     脚注的编号仅为数字
+    %   circled   脚注的编号为带圆圈数字 (仅限1-10)
+    %   (默认选项为 plain )
+    %
+    numbering = chinese,
+    % 章节编号样式
+    % 可用选项:
+    %   numbering = arabic|alpha|chinese
+    % 说明:
+    %   arabic    使用数字进行编号 (即理科要求)
+    %   alpha     使用字母进行编号 (即外文要求)
+    %   chinese   使用汉字进行编号 (即文科要求)
+    %   (默认选项为 arabic )
+    %
+    bibResource = {./source/thesis-ref.bib},
+    % 参考文献数据源
+    % 由于使用的是 biber + biblatex , 所以必须明确给出 .bib 后缀名
+    %
+    % logoResource = {./source/inner-cover(contains_font).eps},
+    % 封面插图数据源
+    % 模版已自带, 默认选项也已经设置为 ./source/inner-cover(contains_font).eps
   }
+}
 
+% 需要的宏包可以自行调用
 \usepackage{mwe}
 
 \begin{document}
 
+% 设置前置部分编号
 \frontmatter
 
 \begin{abstract}
@@ -32,11 +104,12 @@
   The traditional classroom roll call not only wastes precious time, but also increases the workload of teachers. Therefore, with the help of the WeChat platform as the entrance, a classroom attendance system based on the WeChat applet is established. The article is written in Java language and implemented with the Spring Boot framework. My Sql is selected as the back-end database, the front-end is developed with WeChat development tools, and the back-end uses Intelli J idea, which reduces the system cost while not reducing the stability and reliability of the system. The classroom attendance system developed based on the WeChat applet can greatly save the time cost of the classroom and teachers, and the system development cycle is short, and the software upgrade and maintenance are convenient. The actual test results show that the system runs stably and reliably, and meets the requirements of rapid class formation, sign-in, and leave.
 \end{abstractEN}
 
+% 设置正文编号
 \mainmatter
 
 \chapter{绪论}
 \section{背景}
-\subsection{浅谈Time中国软件}
+\subsection{浅谈中国软件}
 \subsubsection{简介}
 
 大字版手机银行、加粗版汇款界面、语音版绑卡流程、刷存折取款ATM机具……随着国务院办公厅《关于切实解决老年人运用智能技术困难的实施方案》的印发，当前金融服务领域已有多项“适老”措施有序推进。
@@ -58,19 +131,13 @@
 
 记者近日走访北京市多家银行网点、大型商超、菜市场等老年人高频消费场所后发现，由于老年人所处的年龄段、教育背景、生活习惯不同，其金融服务需求也存在较大差异，因此需要分类施策，采取有针对性、差异性的解决方案。
 
-% \begin{lstlisting}[language=C++]
-% #include <stdio.h>
-% int main(int argc, char **argv) {
-%     printf("Hello world!\n");
-%     return 0;
-% }
-% \end{lstlisting}
-
-% \begin{figure}
-%   \centering
-%   \includegraphics[width=.25\textwidth]{example-image}
-%   \caption{图像测试}
-% \end{figure}
+\begin{lstlisting}[language=C++]
+#include <stdio.h>
+int main(int argc, char **argv) {
+    printf("Hello world!\n");
+    return 0;
+}
+\end{lstlisting}
 
 根据记者的调查结果，老年人的金融服务需求总体可分为三类，分别对应三个不同年龄段。一是刚刚退休的人群，年龄集中在55岁至60岁；二是\footnote{帝鸿指黄帝帝鸿指黄帝帝鸿指黄帝帝鸿指黄帝帝鸿指黄帝帝鸿指黄帝帝鸿指黄帝帝鸿指黄帝帝鸿指黄帝帝鸿指黄帝帝鸿指黄帝帝鸿指黄帝帝鸿指黄帝帝鸿指黄帝帝鸿指黄帝帝鸿指黄帝帝鸿指黄帝帝鸿指黄帝帝鸿指黄帝帝鸿指黄帝}退休10年以内的人群，年龄集中在60岁至70岁；三是退休10年以上的人群，年龄多在70岁以上，有些甚至已进入耄耋之年。\footnote{【正义】：一本云“天下之民，谓之浑沌.”}
 
@@ -106,12 +173,6 @@
 
 对于退休10年以内的人群，他们的金融需求有何特点？阻碍他们获取金融服务的“堵点”是什么？记者调查发现，这一群体可细分为两类，一类接受新技术的意愿、能力较强，其金融服务需求与刚退休人群相似；另一类有潜在的智能技术运用需求，如果有人帮助，他们愿意尝试。
 
-% \begin{figure}
-%   \centering
-%   \includegraphics[width=.5\textwidth]{example-image}
-%   \caption{对于退休10年以内的人群，他们的金融需求有何特点？阻碍他们获取金融服务的“堵点”是什么？}
-% \end{figure}
-
 在中国工商银行北京广安门支行营业室，上午9点开门后就有老年人陆续前来办理业务。“等待中的老年客户有时会问，为什么排在我后面的那位老人提前走了？他办完业务了吗？这时我们会告诉他，那位老人是通过自助机具办的业务，所以更快，进而询问他是否愿意尝试。”中国工商银行北京广安门支行营业室主任张然说，在银行工作人员的引导与帮助下，不少老年客户对智能服务积极接受，也认可其便捷性与安全性。
 
 但受访老人普遍表示，如果身边没有专业人员指导，自己不会尝试独自使用智能机具，“不会用”“看不清”“怕出错”是主要顾虑。
@@ -140,15 +201,16 @@
 
 李伟表示，央行已从现金管理、支付服务、普惠金融三方面入手采取措施，旨在切实提升老年人日常金融服务的可得性和满意度。在普惠金融方面，接下来央行将指导金融机构聚焦老年人日常的高频金融场景，打造线上线下一体化、贴合老年人需求的“适老”金融服务。
 
+% 正文后部分
 \backmatter
 \PrintReference
 
 \begin{appendix}
-  感谢天，感谢地，感谢阳光照耀了大地~~~~~~
+  感谢天，感谢地，感谢阳光照耀了大地。
 \end{appendix}
 
 \begin{acknowledgement}
-  感谢天，感谢地，感谢阳光照耀了大地~~~~~~
+  感谢天，感谢地，感谢阳光照耀了大地。
 \end{acknowledgement}
 
 \end{document}
