@@ -499,8 +499,8 @@
 \declaretheorem[name=证明,style=proofstyle,numbered=no]         { Proof      }
 \RenewDocumentEnvironment {proof} { } { \begin{Proof} } { \end{Proof} }
 
-\tl_new:N \l__ecnu_bib_resource_tl
 % 参考文献
+\tl_new:N \l__ecnu_bib_resource_tl
 \keys_define:nn { ecnu / style }
   {
     bibResource .tl_set:N = \l__ecnu_bib_resource_tl
@@ -713,13 +713,27 @@
         \c__ecnu_schoolNum_tl \c__ecnu_colon_tl \underline{10269}
       }
   }
-\cs_new_protected:Npn \__ecnu_cover_logo:
+% logo图导入接口
+\tl_new:N \l__ecnu_logo_resource_tl
+\keys_define:nn { ecnu / style }
   {
-    \begin{minipage} [ c ] { \textwidth }
-      \centering
-      \includegraphics{./figures/inner-cover(contains_font).eps}
-    \end{minipage}
+    logoResource .tl_set:N = \l__ecnu_logo_resource_tl
   }
+\keys_set:nn { ecnu / style }
+  {
+    logoResource = {./figures/inner-cover(contains_font).eps}
+  }
+\cs_new_protected:Npn \__ecnu_cover_logo:
+  { 
+    \tl_if_empty:NF \l__ecnu_logo_resource_tl
+      {
+        \begin{minipage} [ c ] { \textwidth }
+          \centering
+          \includegraphics{\l__ecnu_logo_resource_tl}
+        \end{minipage}
+      }
+  }
+% 封面接口
 \tl_new:N \l__ecnu_cover_template_tl
 \DeclareObjectType { ecnu / cover } { \c_zero_int }
 \cs_new_protected:Npn \__ecnu_cover_declare_template_interface:nn #1#2
