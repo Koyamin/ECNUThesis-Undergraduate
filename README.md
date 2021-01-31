@@ -44,6 +44,61 @@ latexmk -xelatex thesis
 - `style/... = ...`；
 - `style/... = ...`。
 
+注意事项: 
+1. 请勿在参数设置中出现空行；
+2. `=` 两侧的空格将被忽略；
+3. `/` 两侧的空格不会被忽略；
+4. 请使用英文逗号 `,` 分隔选项。
+
+#### `info`类的设置
+
+`info` 类用于输入论文信息。具体的设置选项如下所示。
+
+- `title = {...}` 表示中文标题；
+- `titleEN = {...}` 表示英文标题；
+- `author = {...}` 表示作者姓名；
+- `studentID = {...}` 表示作者学号；
+- `department = {...}` 表示学院名称；
+- `major = {...}` 表示专业名称；
+- `supervisor = {...}` 表示指导教师姓名；
+- `academicTitle = {教授}` 表示指导教师职称；
+- `year  = {...}` 表示论文完成年份；
+- `month = {...}` 表示论文完成月份；
+- `keywords = {..., ..., ..., ...}` 表示中文关键词，请使用英文逗号 "," 以分隔；
+- `keywordsEN = {..., ..., ..., ...}` 表示英文关键词，请使用英文逗号 "," 以分隔。
+
+#### `style`类的设置
+
+`style` 类用于简单设置论文格式。具体的设置选项如下所示。
+
+- `footnote  = plain|circled` 表示脚注编号样式。
+    
+    可用选项为 `footnote = plain|circled`。
+
+    - `plain`表示脚注的编号仅为数字，
+    - `circled`表示脚注的编号为带圆圈数字 (仅限1-10)。
+    
+    (默认选项为 plain )
+
+- `numbering = arabic|alpha|chinese` 表示章节编号样式。
+    
+    可用选项为 `numbering = arabic|alpha|chinese`。
+    
+    -  `arabic`    使用数字进行编号 (即理科要求)，
+    -  `alpha`     使用字母进行编号 (即外文要求)，
+    -  `chinese`   使用汉字进行编号 (即文科要求)，
+    
+    (默认选项为 arabic )
+
+- `bibResource = {...}` 表示参考文献数据源。
+    
+    由于使用的是 biber + biblatex , 所以必须明确给出 `.bib` 后缀名
+
+- `logoResource = {...}` 表示封面插图数据源
+    
+    模版已自带，位于`./source/inner-cover(contains_font).eps`。
+    
+    默认选项也已经设置为 ./source/inner-cover(contains_font).eps
 
 ## 不足与改进
 
