@@ -5,13 +5,13 @@
 本模版重构了[袁轶君](https://github.com/YijunYuan)的[ECNU-Undergraduate-LaTeX](https://github.com/YijunYuan/ECNU-Undergraduate-LaTeX)，
 并将个人信息的填写、个性化设置、命令、环境等进行了一定的封装，让使用者可以更加方便地使用LaTeX进行创作。
 
-### 使用环境
+## 使用环境
 
 本模版只能使用 XeLaTeX 进行编译，使用其它 LaTeX 引擎将会导致编译失败。所以请安装最新版的 TeX Live ，并使用 XeLaTeX 进行编译。
 
 若您的个人计算机中仍安装了老旧的 CTeX 套装，请毫不犹豫地卸载它，并随后安装最新版的 TeX Live。
 
-### 编译方法
+## 编译方法
 
 假设 TeX 源文件为 `thesis.tex`，请在命令行中执行
 ```
@@ -19,9 +19,9 @@ latexmk -xelatex thesis
 ```
 以编译。
 
-### 使用方法
+## 使用方法
 
-#### 导入文档类
+### 导入文档类
 
 在导言区导入文档类
 ```
@@ -30,7 +30,7 @@ latexmk -xelatex thesis
 文档类模版可以设置选项。
 - `printMode`：是否开启打印模式(开启打印模式适合双面打印，关闭打印模式适合提交电子版), 若缺省则为关闭, 反之则为开启。
 
-#### 参数设置
+### 参数设置
 
 在导入文档类后输入
 ```
@@ -45,7 +45,7 @@ latexmk -xelatex thesis
 - `style/... = ...`。
 
 
-### 不足与改进
+## 不足与改进
 
 本模版仍有一些不足与值得改进之处。已知的不足如下所示。
 
