@@ -2,7 +2,7 @@
 
 ### 华东师范大学本科生学士学位论文模版
 
-本模版重构了[袁轶君](https://github.com/YijunYuan)的[ECNU-Undergraduate-LaTeX](https://github.com/YijunYuan/ECNU-Undergraduate-LaTeX)，
+本模版使用 LaTeX3 重构了[YijunYuan](https://github.com/YijunYuan) 的 [ECNU-Undergraduate-LaTeX](https://github.com/YijunYuan/ECNU-Undergraduate-LaTeX)，
 并将个人信息的填写、个性化设置、命令、环境等进行了一定的封装，让使用者可以更加方便地使用LaTeX进行创作。
 
 ## 使用环境
@@ -92,7 +92,7 @@ latexmk -xelatex thesis
 
 - `bibResource = {...}` 表示参考文献数据源。
     
-    由于使用的是 biber + biblatex , 所以必须明确给出 `.bib` 后缀名
+    由于参考文献处理使用的是 biber + biblatex , 所以必须明确给出 `.bib` 后缀名
 
 - `logoResource = {...}` 表示封面插图数据源
     
@@ -105,5 +105,15 @@ latexmk -xelatex thesis
 本模版仍有一些不足与值得改进之处。已知的不足如下所示。
 
 - 页眉的年级不能进行修改；
-- 尾注功能未实现。
+- 尾注功能未实现；
+- Windows 系统中宋体加粗被替换成了黑体；
 - ……
+
+## 参考
+
+- Kunth D E. 的 The TeXBook: Computers & Typesetting.
+- CTEX.ORG 的 CTeX 宏集手册
+- CTEX.ORG 的 xeCJK 宏包
+- The LaTeX3 Project 的 The LaTeX3 Sources
+- [stone-zeng](https://github.com/stone-zeng) 的 [fduthesis](https://github.com/stone-zeng/fduthesis)
+- [YijunYuan](https://github.com/YijunYuan) 的 [ECNU-Undergraduate-LaTeX](https://github.com/YijunYuan/ECNU-Undergraduate-LaTeX)
