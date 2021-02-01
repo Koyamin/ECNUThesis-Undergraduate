@@ -61,7 +61,7 @@ latexmk -xelatex thesis
 - `department = {...}` 表示学院名称；
 - `major = {...}` 表示专业名称；
 - `supervisor = {...}` 表示指导教师姓名；
-- `academicTitle = {教授}` 表示指导教师职称；
+- `academicTitle = {...}` 表示指导教师职称；
 - `year  = {...}` 表示论文完成年份；
 - `month = {...}` 表示论文完成月份；
 - `keywords = {..., ..., ..., ...}` 表示中文关键词，请使用英文逗号 "," 以分隔；
@@ -78,7 +78,7 @@ latexmk -xelatex thesis
     - `plain`表示脚注的编号仅为数字，
     - `circled`表示脚注的编号为带圆圈数字 (仅限1-10)。
     
-    (默认选项为 plain )
+    (默认选项为 `plain` )
 
 - `numbering = arabic|alpha|chinese` 表示章节编号样式。
     
@@ -88,7 +88,18 @@ latexmk -xelatex thesis
     -  `alpha`     使用字母进行编号 (即外文要求)，
     -  `chinese`   使用汉字进行编号 (即文科要求)，
     
-    (默认选项为 arabic )
+    (默认选项为 `arabic` )
+
+- `fontCJK = fandol|windows|mac|default` 表示中文字体选择
+    
+    可用选项为 `fontCJK = fandol|windows|mac|default`。
+
+    - `fandol`    使用 TeX 自带的 fandol 字体
+    - `windows`   使用 Windows 系统内的字体 (中易)
+    - `mac`       使用 MacOS 系统内的字体
+    - `default`   使用 CTeX 自动配置
+    
+    (默认选项为 `default` )
 
 - `bibResource = {...}` 表示参考文献数据源。
     
@@ -98,7 +109,7 @@ latexmk -xelatex thesis
     
     模版已自带，位于`./source/inner-cover(contains_font).eps`。
     
-    默认选项也已经设置为 ./source/inner-cover(contains_font).eps
+    (默认选项设置为 `./source/inner-cover(contains_font).eps`)
 
 ## 不足与改进
 
