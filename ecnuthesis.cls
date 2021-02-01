@@ -95,20 +95,6 @@
     right     = 2.0 cm,
     footskip  = 0.7 cm
   }
-\pagestyle{fancy}
-  \fancyhead[L,R]       { }
-  \fancyhead[C]         { \small 华东师范大学2017级本科毕业论文/设计 }
-  \fancyfoot[C]         { \small \thepage }
-  \fancyfoot[L,R]       { }
-  \headheight = 13 pt
-\fancypagestyle{plain} 
-  {
-    \fancyhead[L,R]     { }
-    \fancyhead[C]       { \small 华东师范大学2017级本科毕业论文/设计 }
-    \fancyfoot[C]       { \small \thepage }
-    \fancyfoot[L,R]     { }
-    \headheight = 13 pt
-  }
 \cs_new_protected:Npn \__ecnu_appto_cmd:Nn #1#2
   {
     \ctex_appto_cmd:NnnTF #1 { } {#2}
@@ -128,6 +114,65 @@
     0123456789
   }
 \ctex_at_end_preamble:n {\ecnu_allow_url_break:}
+% 论文基本信息
+\clist_map_inline:nn 
+  { 
+    title, titleEN, author, studentID, department, major, supervisor
+    academicTitle
+  }
+  { \tl_new:c { l__ecnu_info_ #1 _tl } }
+\int_new:N   \l__ecnu_info_year_int
+\int_zero:N  \l__ecnu_info_year_int
+\int_new:N   \l__ecnu_enroll_year_int
+\int_new:N   \l__ecnu_info_month_int
+\int_zero:N  \l__ecnu_info_month_int
+\clist_new:N \l__ecnu_info_keywords_clist
+\clist_new:N \l__ecnu_info_keywordsEN_clist
+\keys_define:nn { ecnu / info }
+  {
+    title           .tl_set:N     = \l__ecnu_info_title_tl,
+    titleEN         .tl_set:N     = \l__ecnu_info_titleEN_tl,
+    author          .tl_set:N     = \l__ecnu_info_author_tl,
+    studentID       .tl_set:N     = \l__ecnu_info_studentID_tl,
+    department      .tl_set:N     = \l__ecnu_info_department_tl,
+    major           .tl_set:N     = \l__ecnu_info_major_tl,
+    supervisor      .tl_set:N     = \l__ecnu_info_supervisor_tl,
+    academicTitle   .tl_set:N     = \l__ecnu_info_academicTitle_tl,
+    year            .int_set:N    = \l__ecnu_info_year_int,
+    month           .int_set:N    = \l__ecnu_info_month_int,
+    keywords        .clist_set:N  = \l__ecnu_info_keywords_clist,
+    keywordsEN      .clist_set:N  = \l__ecnu_info_keywordsEN_clist
+  }
+\int_compare:nNnTF { \l__ecnu_info_year_int } = { \c_zero_int } 
+  { \int_set_eq:NN \l__ecnu_info_year_int \c_sys_year_int } 
+  { }
+\int_compare:nNnTF { \l__ecnu_info_month_int } = { \c_zero_int } 
+  {
+    \int_set_eq:NN \l__ecnu_info_month_int \c_sys_month_int
+    \NewDocumentCommand \themonth { } 
+      { \int_use:N \l__ecnu_info_month_int } 
+  } 
+  { \NewDocumentCommand \themonth { } { \int_use:N \c_sys_month_int } }
+\NewDocumentCommand \theyear { } { \int_to_arabic:n {\l__ecnu_info_year_int} }
+\NewDocumentCommand \enrollYear { } 
+  { 
+    \int_set:Nn \l__ecnu_enroll_year_int {\l__ecnu_info_year_int - 4 }
+    \int_use:N  \l__ecnu_enroll_year_int
+  }
+\pagestyle{fancy}
+  \fancyhead[L,R]       { }
+  \fancyhead[C]         { \small 华东师范大学 \enrollYear 级本科毕业论文/设计 }
+  \fancyfoot[C]         { \small \thepage }
+  \fancyfoot[L,R]       { }
+  \headheight = 13 pt
+\fancypagestyle{plain} 
+  {
+    \fancyhead[L,R]     { }
+    \fancyhead[C]       { \small 华东师范大学 \enrollYear 级本科毕业论文/设计 }
+    \fancyfoot[C]       { \small \thepage }
+    \fancyfoot[L,R]     { }
+    \headheight = 13 pt
+  }
 % 字体设置
 \tl_new:N \g__ecnu_cjk_fontset_tl
 \keys_define:nn { ecnu / style }
@@ -312,10 +357,6 @@
   }
 \ctex_at_end_preamble:n { \__ecnu_load_font: }
 
-
-
-
-
 % 脚注编号样式
 \tl_const:Nn \c__ecnu_fn_style_plain_tl    { plain   }
 \tl_const:Nn \c__ecnu_fn_style_circled_tl  { circled }
@@ -361,7 +402,6 @@
     \hbox_to_wd:nn { 1.5 em } { \@thefnmark \hfil }
     #1
   }
-
 
 % 代码块设置
 \definecolor { colorKeyword     } { RGB } {  86,156,214 }
@@ -649,45 +689,6 @@
     \clearpage{\thispagestyle{empty}\cleardoublepage}
   }
 
-% 论文基本信息
-\clist_map_inline:nn 
-  { 
-    title, titleEN, author, studentID, department, major, supervisor
-    academicTitle, year, month
-  }
-  { \tl_new:c { l__ecnu_info_ #1 _tl } }
-\clist_new:N \l__ecnu_info_keywords_clist
-\clist_new:N \l__ecnu_info_keywordsEN_clist
-\keys_define:nn { ecnu / info }
-  {
-    title           .tl_set:N     = \l__ecnu_info_title_tl,
-    titleEN         .tl_set:N     = \l__ecnu_info_titleEN_tl,
-    author          .tl_set:N     = \l__ecnu_info_author_tl,
-    studentID       .tl_set:N     = \l__ecnu_info_studentID_tl,
-    department      .tl_set:N     = \l__ecnu_info_department_tl,
-    major           .tl_set:N     = \l__ecnu_info_major_tl,
-    supervisor      .tl_set:N     = \l__ecnu_info_supervisor_tl,
-    academicTitle   .tl_set:N     = \l__ecnu_info_academicTitle_tl,
-    year            .tl_set:N     = \l__ecnu_info_year_tl,
-    month           .tl_set:N     = \l__ecnu_info_month_tl,
-    keywords        .clist_set:N  = \l__ecnu_info_keywords_clist,
-    keywordsEN      .clist_set:N  = \l__ecnu_info_keywordsEN_clist
-  }
-\keys_set:nn { ecnu / info }
-  {
-    title           = {(中文标题)},
-    titleEN         = {(English Title)},
-    author          = {(作者姓名)},
-    studentID       = {(学号)},
-    department      = {(学院)},
-    major           = {(专业)},
-    supervisor      = {(导师姓名)},
-    academicTitle   = {(导师职称)},
-    year            = {(毕业年份)},
-    month           = {(毕业月份)},
-    keywords        = {关键词1, 关键词2, 关键词3},
-    keywordsEN      = {keyword1, keyword2, keyword3}
-  }
 % 制作封面
 %% 定义内部函数
 \cs_new_protected:Npn \__ecnu_vspace:N #1
@@ -809,8 +810,8 @@
           \skip_vertical:n { 1 ex }
         }
       \skip_vertical:n { 1 em }
-      \l__ecnu_info_year_tl \c__ecnu_year_tl
-      \tl_use:N \l__ecnu_info_month_tl \c__ecnu_month_tl
+      \theyear  \c__ecnu_year_tl
+      \themonth \c__ecnu_month_tl
       \skip_vertical:n { 1 ex }
     \end{minipage}
   }
@@ -819,7 +820,7 @@
     \__ecnu_fixed_width_box:nn { \textwidth }
       {
         \zihao { 4 }
-        \l__ecnu_info_year_tl \c__ecnu_thesisInfo_tl \hfill
+        \theyear \c__ecnu_thesisInfo_tl \hfill
         \c__ecnu_schoolNum_tl \c__ecnu_colon_tl \underline{10269}
       }
   }
@@ -1136,6 +1137,20 @@
     \clearpage{\thispagestyle{empty}\cleardoublepage}
   }
 
+
+\keys_set:nn { ecnu / info }
+  {
+    title           = {(中文标题)},
+    titleEN         = {(English Title)},
+    author          = {(作者姓名)},
+    studentID       = {(学号)},
+    department      = {(学院)},
+    major           = {(专业)},
+    supervisor      = {(导师姓名)},
+    academicTitle   = {(导师职称)},
+    keywords        = {关键词1, 关键词2, 关键词3},
+    keywordsEN      = {keyword1, keyword2, keyword3}
+  }
 \keys_set:nn { ecnu / style }
   {
     footnote     = plain,
