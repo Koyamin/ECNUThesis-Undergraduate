@@ -90,9 +90,9 @@ latexmk -xelatex thesis
     
     (默认选项为 `arabic` )
 
-- `fontCJK = fandol|windows|mac|default` 表示中文字体选择
+- `fontCJK = fandol|windows|mac` 表示中文字体选择
     
-    可用选项为 `fontCJK = fandol|windows|mac|default`。
+    可用选项为 `fontCJK = fandol|windows|mac`。
 
     - `fandol`    使用 TeX 自带的 fandol 字体
     - `windows`   使用 Windows 系统内的字体 (中易)
