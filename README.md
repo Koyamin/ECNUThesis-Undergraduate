@@ -97,9 +97,8 @@ latexmk -xelatex thesis
     - `fandol`    使用 TeX 自带的 fandol 字体
     - `windows`   使用 Windows 系统内的字体 (中易)
     - `mac`       使用 MacOS 系统内的字体
-    - `default`   使用 CTeX 自动配置
     
-    (默认选项为 `default` )
+    (默认选项为 `fandol` )
 
 - `bibResource = {...}` 表示参考文献数据源。
     
