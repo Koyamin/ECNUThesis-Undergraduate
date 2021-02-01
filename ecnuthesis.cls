@@ -47,11 +47,20 @@
 \PassOptionsToClass
   {
     UTF8,
+    heading     = true,
     zihao       = -4,
+    fontset     = none,
     linespread  = 1.5,
     \g__ecnu_to_ctexart_clist,
   }
   { ctexrep }
+\clist_map_inline:nn
+  {
+    { no-math           } { fontspec },
+    { perpage           } { footmisc },
+  }
+  { \PassOptionsToPackage #1 }
+\RequirePackage { etoolbox }
 \LoadClass { ctexrep }
 % 导入宏包
 \PassOptionsToPackage { titles } { tocloft }
@@ -64,6 +73,7 @@
     amssymb,
     unicode-math,
     xcolor,
+    footmisc,
     listings,
     caption,
     graphicx,
@@ -123,7 +133,7 @@
 \keys_define:nn { ecnu / style }
   {
     fontCJK .choices:nn =
-      { fandol, mac, windows, default }
+      { fandol, mac, windows }
       { \tl_set_eq:NN \g__ecnu_cjk_fontset_tl \l_keys_choice_tl }
   }
 \cs_new_protected:Npn \__ecnu_setmainfont:nn #1#2
@@ -301,10 +311,11 @@
     \use:c { __ecnu_load_cjk_font_ \g__ecnu_cjk_fontset_tl : }
   }
 \ctex_at_end_preamble:n { \__ecnu_load_font: }
-\keys_set:nn { ecnu / style } 
-  {
-    fontCJK = default,
-  }
+
+
+
+
+
 % 脚注编号样式
 \tl_const:Nn \c__ecnu_fn_style_plain_tl    { plain   }
 \tl_const:Nn \c__ecnu_fn_style_circled_tl  { circled }
@@ -350,10 +361,7 @@
     \hbox_to_wd:nn { 1.5 em } { \@thefnmark \hfil }
     #1
   }
-\keys_set:nn { ecnu / style }
-  {
-    footnote = plain,
-  }
+
 
 % 代码块设置
 \definecolor { colorKeyword     } { RGB } {  86,156,214 }
@@ -559,11 +567,7 @@
       fixskip       = true,
     },
   }
-\keys_set:nn { ecnu / style }
-  {
-    footnote   = plain,
-    numbering  = arabic,
-  }
+
 % 图片标号
 \cs_set:Npn \thefigure
   { \int_to_arabic:n { \c@chapter } - \int_to_arabic:n { \c@figure } }
@@ -825,10 +829,7 @@
   {
     logoResource .tl_set:N = \l__ecnu_logo_resource_tl
   }
-\keys_set:nn { ecnu / style }
-  {
-    logoResource = {./source/inner-cover(contains_font).eps}
-  }
+
 \cs_new_protected:Npn \__ecnu_cover_logo:
   { 
     \tl_if_empty:NF \l__ecnu_logo_resource_tl
@@ -1133,6 +1134,14 @@
 \NewDocumentCommand \backmatter { }
   {
     \clearpage{\thispagestyle{empty}\cleardoublepage}
+  }
+
+\keys_set:nn { ecnu / style }
+  {
+    footnote     = plain,
+    numbering    = arabic,
+    fontCJK      = fandol,
+    logoResource = {./source/inner-cover(contains_font).eps}
   }
 
 % 提供接口
