@@ -119,6 +119,13 @@
   }
 \ctex_at_end_preamble:n {\ecnu_allow_url_break:}
 % 字体设置
+\tl_new:N \g__ecnu_cjk_fontset_tl
+\keys_define:nn { ecnu / style }
+  {
+    fontCJK .choices:nn =
+      { fandol, mac, windows, default }
+      { \tl_set_eq:NN \g__ecnu_cjk_fontset_tl \l_keys_choice_tl }
+  }
 \cs_new_protected:Npn \__ecnu_setmainfont:nn #1#2
   { \__fontspec_main_setmainfont:nn {#2} {#1} }
 \cs_new_protected:Npn \__ecnu_setsansfont:nn #1#2
@@ -127,6 +134,28 @@
   { \__fontspec_main_setmonofont:nn {#2} {#1} }
 \cs_new_protected:Npn \__ecnu_setmathfont:nn #1#2
   { \__um_setmathfont:nn {#2} {#1} }
+\cs_new_protected:Npn \__ecnu_setCJKmainfont:nn #1#2
+  { \__ecnu_set_family:nnn { \CJKrmdefault } {#2} {#1} }
+\cs_new_protected:Npn \__ecnu_setCJKsansfont:nn #1#2
+  { \__ecnu_set_family:nnn { \CJKsfdefault } {#2} {#1} }
+\cs_new_protected:Npn \__ecnu_setCJKmonofont:nn #1#2
+  { \__ecnu_set_family:nnn { \CJKttdefault } {#2} {#1} }
+\cs_new_protected:Npn \__ecnu_set_cjk_font_kai:nn #1#2
+  { \__ecnu_set_family:nnn { ecnu@kai } {#2} {#1} }
+\cs_new_protected:Npn \ecnu@kai
+  { \__ecnu_switch_family:n { ecnu@kai } }
+\tl_const:Nn \__ecnu_cjk_font_options:
+  { UprightFont = *, ItalicFont = *, AutoFakeBold = true }
+\cs_new_protected:Npx \__ecnu_setCJKmainfont:n   #1
+  { \__ecnu_setCJKmainfont:nn   {#1} { \__ecnu_cjk_font_options: } }
+\cs_new_protected:Npx \__ecnu_setCJKsansfont:n   #1
+  { \__ecnu_setCJKsansfont:nn   {#1} { \__ecnu_cjk_font_options: } }
+\cs_new_protected:Npx \__ecnu_setCJKmonofont:n   #1
+  { \__ecnu_setCJKmonofont:nn   {#1} { \__ecnu_cjk_font_options: } }
+\cs_new_protected:Npx \__ecnu_set_cjk_font_kai:n #1
+  { \__ecnu_set_cjk_font_kai:nn {#1} { \__ecnu_cjk_font_options: } }
+\cs_new_eq:NN \__ecnu_set_family:nnn  \xeCJK_set_family:nnn
+\cs_new_eq:NN \__ecnu_switch_family:n \xeCJK_switch_family:n
 \tl_new:N \g__ecnu_font_family_xits_tl
 \tl_new:N \g__ecnu_font_style_xits_rm_tl
 \tl_new:N \g__ecnu_font_style_xits_bf_tl
@@ -199,8 +228,83 @@
           { BoldFont = \g__ecnu_font_name_xits_math_bf_tl .otf }
       }
   }
-\cs_new_protected:Npn \__ecnu_load_font: { \__ecnu_load_fontEN: }
+\cs_new_protected:Npn \__ecnu_load_cjk_font_fandol:
+  {
+    \__ecnu_setCJKmainfont:nn   { FandolSong }
+      {
+        Extension      = .otf,
+        UprightFont    = *-Regular,
+        BoldFont       = *-Bold,
+        ItalicFont     = *-Regular,
+        BoldItalicFont = *-Bold
+      }
+    \__ecnu_setCJKsansfont:nn   { FandolHei  }
+      {
+        Extension      = .otf,
+        UprightFont    = *-Regular,
+        BoldFont       = *-Bold,
+        ItalicFont     = *-Regular,
+        BoldItalicFont = *-Bold
+      }
+    \__ecnu_setCJKmonofont:nn   { FandolFang }
+      {
+        Extension      = .otf,
+        UprightFont    = *-Regular,
+        BoldFont       = *-Regular,
+        ItalicFont     = *-Regular,
+        BoldItalicFont = *-Regular
+      }
+    \__ecnu_set_cjk_font_kai:nn { FandolKai  }
+      {
+        Extension      = .otf,
+        UprightFont    = *-Regular,
+        BoldFont       = *-Regular,
+        ItalicFont     = *-Regular,
+        BoldItalicFont = *-Regular
+      }
+  }
+\cs_new_protected:Npn \__ecnu_load_cjk_font_mac:
+  {
+    \__ecnu_setCJKmainfont:nn   { STSongti-SC }
+      {
+        UprightFont    = *-Light,
+        BoldFont       = *-Bold,
+        ItalicFont     = *-Light,
+        BoldItalicFont = *-Bold
+      }
+    \__ecnu_setCJKsansfont:nn   { STHeitiSC   }
+      {
+        UprightFont    = *-Medium,
+        BoldFont       = *-Medium,
+        ItalicFont     = *-Medium,
+        BoldItalicFont = *-Medium
+      }
+    \__ecnu_setCJKmonofont:n    { STFangsong  }
+    \__ecnu_set_cjk_font_kai:nn { STKaitiSC   }
+      {
+        UprightFont    = *-Regular,
+        BoldFont       = *-Bold,
+        ItalicFont     = *-Regular,
+        BoldItalicFont = *-Bold
+      }
+  }
+\cs_new_protected:Npn \__ecnu_load_cjk_font_windows:
+  {
+    \__ecnu_setCJKmainfont:n   { SimSun   }
+    \__ecnu_setCJKsansfont:n   { SimHei   }
+    \__ecnu_setCJKmonofont:n   { FangSong }
+    \__ecnu_set_cjk_font_kai:n { KaiTi    }
+  }
+\cs_new_protected:Npn \__ecnu_load_font: 
+  { 
+    \__ecnu_load_fontEN: 
+    \use:c { __ecnu_load_cjk_font_ \g__ecnu_cjk_fontset_tl : }
+  }
 \ctex_at_end_preamble:n { \__ecnu_load_font: }
+\keys_set:nn { ecnu / style } 
+  {
+    fontCJK = default,
+  }
 % 脚注编号样式
 \tl_const:Nn \c__ecnu_fn_style_plain_tl    { plain   }
 \tl_const:Nn \c__ecnu_fn_style_circled_tl  { circled }
@@ -666,6 +770,7 @@
 \tl_const:Nn \c__ecnu_year_tl               { 年 }
 \tl_const:Nn \c__ecnu_month_tl              { 月 }
 \tl_const:Nn \c__ecnu_thesisInfo_tl         { 届本科生学士学位论文 }
+%% 封面各部件的封装
 \cs_new_protected:Npn \__ecnu_cover_info:
   {
     \begin{minipage} [ c ] { \textwidth }
@@ -691,6 +796,7 @@
       \bool_until_do:nn
         { \clist_if_empty_p:N \l__ecnu_tmpa_clist }
         {
+          \bfseries
           \clist_pop:NN \l__ecnu_tmpa_clist \l__ecnu_tmpa_tl
           \clist_pop:NN \l__ecnu_tmpb_clist \l__ecnu_tmpb_tl
           \__ecnu_spread_box:nn { 4 em } { \l__ecnu_tmpa_tl }
@@ -713,7 +819,7 @@
         \c__ecnu_schoolNum_tl \c__ecnu_colon_tl \underline{10269}
       }
   }
-% logo图导入接口
+%% logo图导入接口
 \tl_new:N \l__ecnu_logo_resource_tl
 \keys_define:nn { ecnu / style }
   {
@@ -835,7 +941,8 @@
         \AssignTemplateKeys
         \tl_use:c        { l__ecnu_cover / #1 / format_tl }
         \clist_map_inline:nn {#2}
-          { \noindent
+          { 
+            \noindent
             \use:c { __ecnu_cover / #1 / ####1 / align:n }
               {
                 \tl_use:c { l__ecnu_cover / #1 / ####1 / format_tl  }
