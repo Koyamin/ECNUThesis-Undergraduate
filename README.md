@@ -2,6 +2,8 @@
 
 ### 华东师范大学本科生学士学位论文模版
 
+[![](https://img.shields.io/badge/Overleaf-ECNUthesis-brightgreen)](https://www.overleaf.com/latex/templates/ecnuthesis-latex-thesis-template-for-east-china-normal-university/szppdtkvgvpk)
+
 本模版使用 LaTeX3 重构了[YijunYuan](https://github.com/YijunYuan) 的 [ECNU-Undergraduate-LaTeX](https://github.com/YijunYuan/ECNU-Undergraduate-LaTeX)，
 并将个人信息的填写、个性化设置、命令、环境等进行了一定的封装，让使用者可以更加方便地使用LaTeX进行创作。
 
