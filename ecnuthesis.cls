@@ -1127,17 +1127,11 @@
   }
 
 \NewDocumentCommand \frontmatter { }
-  {
-    \cleardoublepage\pagenumbering{Roman}
-  }
+  { \cleardoublepage\pagenumbering{Roman} }
 \NewDocumentCommand \mainmatter { }
-  {
-    \cleardoublepage\pagenumbering{arabic}
-  }
+  { \cleardoublepage\pagenumbering{arabic} }
 \NewDocumentCommand \backmatter { }
-  {
-    \clearpage{\thispagestyle{empty}\cleardoublepage}
-  }
+  { \clearpage{\thispagestyle{empty}\cleardoublepage} }
 
 
 \keys_set:nn { ecnu / info }
