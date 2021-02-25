@@ -1024,7 +1024,7 @@
   { 
     \phantomsection
     \addcontentsline{toc}{chapter}{ABSTRACT}
-    \__ecnu_title:V \l__ecnu_info_titleEN_tl
+    \__ecnu_title:V { \rmfamily\bfseries\l__ecnu_info_titleEN_tl }
     \mode_leave_vertical: \par \noindent
     \zihao{5}
     \group_begin: 
