@@ -4,14 +4,14 @@
 
 ### 华东师范大学本科生学士学位论文模版
 
-本模版使用 LaTeX3 重构了[YijunYuan](https://github.com/YijunYuan) 的 [ECNU-Undergraduate-LaTeX](https://github.com/YijunYuan/ECNU-Undergraduate-LaTeX)，
-并将个人信息的填写、个性化设置、命令、环境等进行了一定的封装，让使用者可以更加方便地使用LaTeX进行创作。
+本模版使用 LaTeX3 重构了 [YijunYuan](https://github.com/YijunYuan) 的 [ECNU-Undergraduate-LaTeX](https://github.com/YijunYuan/ECNU-Undergraduate-LaTeX)，
+并将个人信息的填写、个性化设置、命令、环境等进行了一定的封装，让使用者可以更加方便地使用 LaTeX 进行创作。
 
 ## 使用环境
 
 本模版只能使用 XeLaTeX 进行编译，使用其它 LaTeX 引擎将会导致编译失败。所以请安装最新版的 TeX Live ，并使用 XeLaTeX 进行编译。
 
-若您的个人计算机中仍安装了老旧的 CTeX 套装，请毫不犹豫地卸载它，并随后安装最新版的 TeX Live。
+若您的个人计算机中仍安装了老旧的 CTeX 套装，请毫不犹豫地卸载它，并安装最新版的 TeX Live。
 
 ## 编译方法
 
@@ -96,7 +96,7 @@ latexmk -xelatex thesis
     
     可用选项为 `fontCJK = fandol|windows|mac`。
 
-    - `fandol`    使用 TeX 自带的 fandol 字体
+    - `fandol`    使用 TeX 自带的开源 fandol 字体
     - `windows`   使用 Windows 系统内的字体 (中易)
     - `mac`       使用 MacOS 系统内的字体
     
@@ -110,7 +110,7 @@ latexmk -xelatex thesis
     
     模版已自带，位于`./source/inner-cover(contains_font).eps`。
     
-    (默认选项设置为 `./source/inner-cover(contains_font).eps`)
+    (默认选项为空)
 
 ## 不足与改进
 
