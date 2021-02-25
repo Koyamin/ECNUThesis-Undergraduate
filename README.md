@@ -127,3 +127,9 @@ latexmk -xelatex thesis
 - The LaTeX3 Project 的 The LaTeX3 Sources
 - [stone-zeng](https://github.com/stone-zeng) 的 [fduthesis](https://github.com/stone-zeng/fduthesis)
 - [YijunYuan](https://github.com/YijunYuan) 的 [ECNU-Undergraduate-LaTeX](https://github.com/YijunYuan/ECNU-Undergraduate-LaTeX)
+
+## 软件许可证
+
+华东师范大学校徽图案 (`inner-cover(contains_font).eps`) 版权归华东师范大学所有。
+
+其他部分使用 LPPL 授权。
