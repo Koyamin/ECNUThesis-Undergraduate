@@ -819,7 +819,7 @@
   {
     \__ecnu_fixed_width_box:nn { \textwidth }
       {
-        \zihao { 4 }
+        \bfseries\zihao { 4 }
         \theyear \c__ecnu_thesisInfo_tl \hfill
         \c__ecnu_schoolNum_tl \c__ecnu_colon_tl \underline{10269}
       }
@@ -1064,7 +1064,9 @@
     \@starttoc{toc}
     \clearpage{\thispagestyle{empty}\cleardoublepage}
   }
-\renewcommand{\cftchapleader}{\cftdotfill{\cftdotsep}}
+\renewcommand{\cftchapleader}{\cftdotfill{1.0}}
+\renewcommand{\cftsecleader}{\cftdotfill{1.0}}
+\renewcommand{\cftsubsecleader}{\cftdotfill{1.0}}
 \setlength{\cftbeforechapskip}{0pt}
 % 附录
 \tl_const:Nn \c__ecnu_name_appendix_tl         { 附录 }
@@ -1126,7 +1128,7 @@
 
 \NewDocumentCommand \frontmatter { }
   {
-    \cleardoublepage\pagenumbering{roman}
+    \cleardoublepage\pagenumbering{Roman}
   }
 \NewDocumentCommand \mainmatter { }
   {
@@ -1156,7 +1158,7 @@
     footnote     = plain,
     numbering    = arabic,
     fontCJK      = fandol,
-    logoResource = {./source/inner-cover(contains_font).eps}
+    logoResource = {},
   }
 
 % 提供接口

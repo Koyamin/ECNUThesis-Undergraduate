@@ -3,7 +3,7 @@
 % printMode     是否开启打印模式, 若缺省则为关闭, 反之则为开启
 % 用法示例
 % \documentclass[printMode]{ecnuthesis}   (开启打印模式, 适合双面打印)
-% \documentclass[printMode]{ecnuthesis}   (关闭打印模式, 适合提交电子版)
+% \documentclass{ecnuthesis}              (关闭打印模式, 适合提交电子版)
 
 \ecnuSetup {
   % 参数设置
@@ -68,7 +68,7 @@
     %   circled   脚注的编号为带圆圈数字 (仅限1-10)
     %   (默认选项为 plain )
     %
-    numbering = chinese,
+    numbering = arabic,
     % 章节编号样式
     % 可用选项:
     %   numbering = arabic|alpha|chinese
@@ -78,7 +78,7 @@
     %   chinese   使用汉字进行编号 (即文科要求)
     %   (默认选项为 arabic )
     %
-    fontCJK = fandol,
+    fontCJK = mac,
     % 中文字体选择
     % 可用选项:
     %   fontCJK = fandol|windows|mac|default
@@ -92,9 +92,10 @@
     % 参考文献数据源
     % 由于使用的是 biber + biblatex , 所以必须明确给出 .bib 后缀名
     %
-    % logoResource = {./source/inner-cover(contains_font).eps},
+    logoResource = {./source/inner-cover(contains_font).eps},
     % 封面插图数据源
-    % 模版已自带, 默认选项也已经设置为 ./source/inner-cover(contains_font).eps
+    % 模版已自带, 位于 ./source/inner-cover(contains_font).eps
+    % 默认值为空
   }
 }
 
