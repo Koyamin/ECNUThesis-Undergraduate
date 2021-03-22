@@ -56,8 +56,9 @@
   { ctexrep }
 \clist_map_inline:nn
   {
-    { no-math           } { fontspec },
-    { perpage           } { footmisc },
+    { no-math           } { fontspec     },
+    { perpage           } { footmisc     },
+    { mathrm=sym        } { unicode-math },
   }
   { \PassOptionsToPackage #1 }
 \RequirePackage { etoolbox }
@@ -91,10 +92,24 @@
     a4paper,
     top       = 2.5 cm, 
     bottom    = 2.0 cm, 
-    left      = 3.0 cm, 
-    right     = 2.0 cm,
-    footskip  = 0.7 cm
+    footskip  = 0.7 cm,
   }
+\bool_if:NTF \g__ecnu_twoside_bool 
+  {
+    \geometry 
+      {
+        left      = 3.0 cm, 
+        right     = 2.5 cm,
+      } 
+  }
+  {
+    \geometry 
+      {
+        left      = 3.0 cm, 
+        right     = 2.5 cm,
+      } 
+  }
+
 \cs_new_protected:Npn \__ecnu_appto_cmd:Nn #1#2
   {
     \ctex_appto_cmd:NnnTF #1 { } {#2}
@@ -175,11 +190,15 @@
   }
 % 字体设置
 \tl_new:N \g__ecnu_cjk_fontset_tl
+\tl_new:N \g__ecnu_math_fontset_tl
 \keys_define:nn { ecnu / style }
   {
     fontCJK .choices:nn =
       { fandol, mac, windows }
-      { \tl_set_eq:NN \g__ecnu_cjk_fontset_tl \l_keys_choice_tl }
+      { \tl_set_eq:NN \g__ecnu_cjk_fontset_tl \l_keys_choice_tl },
+    fontMath .choices:nn =
+      { lm, times }
+      { \tl_set_eq:NN \g__ecnu_math_fontset_tl \l_keys_choice_tl }
   }
 \cs_new_protected:Npn \__ecnu_setmainfont:nn #1#2
   { \__fontspec_main_setmainfont:nn {#2} {#1} }
@@ -279,9 +298,15 @@
             BoldItalicFont = *-bolditalic,
             Ligatures      = CommonOff
           }
-        \__ecnu_setmathfont:nn { \g__ecnu_font_name_xits_math_rm_tl .otf }
-          { BoldFont = \g__ecnu_font_name_xits_math_bf_tl .otf }
+        
       }
+  }
+\cs_new_protected:Npn \__ecnu_load_math_font_lm:
+  { \__ecnu_setmathfont:nn { latinmodern-math.otf } { } }
+\cs_new_protected:Npn \__ecnu_load_math_font_times:
+  {
+    \__ecnu_setmathfont:nn { \g__ecnu_font_name_xits_math_rm_tl .otf }
+      { BoldFont = \g__ecnu_font_name_xits_math_bf_tl .otf }
   }
 \cs_new_protected:Npn \__ecnu_load_cjk_font_fandol:
   {
@@ -342,6 +367,9 @@
         ItalicFont     = *-Regular,
         BoldItalicFont = *-Bold
       }
+    \__xeCJK_preamble_family:n { \CJKrmdefault }
+    \__xeCJK_preamble_family:n { \CJKsfdefault }
+    \__xeCJK_preamble_family:n { \CJKttdefault }
   }
 \cs_new_protected:Npn \__ecnu_load_cjk_font_windows:
   {
@@ -353,6 +381,7 @@
 \cs_new_protected:Npn \__ecnu_load_font: 
   { 
     \__ecnu_load_fontEN: 
+    \use:c { __ecnu_load_math_font_ \g__ecnu_math_fontset_tl : }
     \use:c { __ecnu_load_cjk_font_ \g__ecnu_cjk_fontset_tl : }
   }
 \ctex_at_end_preamble:n { \__ecnu_load_font: }
@@ -1152,6 +1181,8 @@
     footnote     = plain,
     numbering    = arabic,
     fontCJK      = fandol,
+    fontMath     = lm,
+    bibResource  = {},
     logoResource = {},
   }
 
