@@ -85,7 +85,11 @@
     xeCJKfntef,
     tocloft,
     hyperref,
+    bicaption,
+    booktabs,
   }
+\captionsetup [ figure ] [ bi-second ] { name=Figure }
+\captionsetup [ table  ] [ bi-second ] { name=Table  }
 \geometry
   {
     % showframe,
