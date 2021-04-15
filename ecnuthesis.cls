@@ -1114,9 +1114,16 @@
     \mode_leave_vertical: \par \noindent
     \zihao{5}
     \par
+    \begingroup
+    \let\clearpage\relax
+    \setcounter{chapter}{0}
+    \setcounter{section}{0}
   }
 \cs_new_protected:Npn \__ecnu_appendix_end:
-  { \clearpage{\thispagestyle{empty}\cleardoublepage} }
+  {
+    \endgroup 
+    \clearpage{\thispagestyle{empty}\cleardoublepage} 
+  }
 \NewDocumentEnvironment { acknowledgement } { }
   { \__ecnu_acknowledgement_begin: } { \__ecnu_acknowledgement_end: }
 \cs_new_protected:Npn \__ecnu_acknowledgement_begin:
