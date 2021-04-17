@@ -2,7 +2,7 @@
 
 [![](https://img.shields.io/badge/Overleaf-ECNUthesis-brightgreen.svg)](https://www.overleaf.com/latex/templates/ecnuthesis-latex-thesis-template-for-east-china-normal-university/szppdtkvgvpk)
 
-### 华东师范大学本科生学士学位论文模版
+## 华东师范大学本科生学士学位论文模版
 
 本模版使用 LaTeX3 重构了 [YijunYuan](https://github.com/YijunYuan) 的 [ECNU-Undergraduate-LaTeX](https://github.com/YijunYuan/ECNU-Undergraduate-LaTeX)，
 并将个人信息的填写、个性化设置、命令、环境等进行了一定的封装，让使用者可以更加方便地使用 LaTeX 进行创作。
@@ -11,6 +11,7 @@
 
 1. 模板中默认添加了对 `bicaption` 和 `booktabs` 两个宏包的引用，前者提供了符合学校要求的双语图表注释，后者提供了三线表所需要的组件。
 2. 修正了附录中章节的编号及显示。
+3. 修正了英文摘要及关键词的字体。
 
 ### Ver 0.1.1
 
