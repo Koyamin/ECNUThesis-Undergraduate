@@ -85,7 +85,11 @@
     xeCJKfntef,
     tocloft,
     hyperref,
+    bicaption,
+    booktabs,
   }
+\captionsetup [ figure ] [ bi-second ] { name=Figure }
+\captionsetup [ table  ] [ bi-second ] { name=Table  }
 \geometry
   {
     % showframe,
@@ -1053,11 +1057,11 @@
   { 
     \phantomsection
     \addcontentsline{toc}{chapter}{ABSTRACT}
-    \__ecnu_title:V { \rmfamily\bfseries\l__ecnu_info_titleEN_tl }
+    \__ecnu_title:V { \rmfamily\bfseries \l__ecnu_info_titleEN_tl }
     \mode_leave_vertical: \par \noindent
     \zihao{5}
     \group_begin: 
-      \sffamily \c__ecnu_name_abstractEN_tl \c__ecnu_colon_tl
+      \rmfamily\bfseries \c__ecnu_name_abstractEN_tl \c__ecnu_colon_tl
     \group_end:
     \par
   }
@@ -1071,7 +1075,7 @@
 \cs_new_protected:Npn \__ecnu_abstractEN_end:
   {
     \__ecnu_keywords:nNn
-      { \sffamily \c__ecnu_name_keywordsEN_tl \c__ecnu_colon_tl }
+      { \rmfamily\bfseries \c__ecnu_name_keywordsEN_tl \c__ecnu_colon_tl }
       \l__ecnu_info_keywordsEN_clist { ,~ }
     \clearpage{\thispagestyle{empty}\cleardoublepage}
   }
@@ -1110,9 +1114,16 @@
     \mode_leave_vertical: \par \noindent
     \zihao{5}
     \par
+    \begingroup
+    \let\clearpage\relax
+    \setcounter{chapter}{0}
+    \setcounter{section}{0}
   }
 \cs_new_protected:Npn \__ecnu_appendix_end:
-  { \clearpage{\thispagestyle{empty}\cleardoublepage} }
+  {
+    \endgroup 
+    \clearpage{\thispagestyle{empty}\cleardoublepage} 
+  }
 \NewDocumentEnvironment { acknowledgement } { }
   { \__ecnu_acknowledgement_begin: } { \__ecnu_acknowledgement_end: }
 \cs_new_protected:Npn \__ecnu_acknowledgement_begin:
