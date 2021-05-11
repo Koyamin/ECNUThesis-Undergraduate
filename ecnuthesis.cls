@@ -1,6 +1,6 @@
 \NeedsTeXFormat{LaTeX2e}
 \RequirePackage{expl3}
-\GetIdInfo $Id: ecnuthesis.cls 0.1 2021-01-31 12:00:00Z Koyamin <koyafumin@gmail.com> $
+\GetIdInfo $Id: ecnuthesis.cls 0.1.3 2021-05-11 15:00:00Z Koyamin <koyafumin@gmail.com> Qucheng <i@qcmiao.cn> $
   {Undergraduate Thesis Template for East China Normal University}
 \ProvidesExplClass{\ExplFileName}
   {\ExplFileDate}{\ExplFileVersion}{\ExplFileDescription}
@@ -32,11 +32,13 @@
       {
         \clist_gput_right:Nn \g__ecnu_to_ctexart_clist { twoside }
         \bool_set_true:N     \g__ecnu_twoside_bool
+        \bool_set_false:N    \g__ecnu_pdfpagelabels_bool
       },
       printMode / false .code:n = 
       {
         \clist_gput_right:Nn \g__ecnu_to_ctexart_clist { oneside }
         \bool_set_false:N    \g__ecnu_twoside_bool
+        \bool_set_true:N     \g__ecnu_pdfpagelabels_bool
       },
     printMode   .default:n = true,
     printMode   .initial:n = false,
@@ -65,7 +67,11 @@
 \LoadClass { ctexrep }
 % 导入宏包
 \PassOptionsToPackage { titles } { tocloft }
-\PassOptionsToPackage { hidelinks } { hyperref }
+\PassOptionsToPackage { hidelinks, hypertexnames=false } { hyperref }
+\bool_if:NF \g__ecnu_pdfpagelabels_bool
+  {
+    \PassOptionsToPackage { pdfpagelabels=false } { hyperref }
+  }
 \RequirePackage
   {
     geometry,
@@ -213,11 +219,11 @@
 \cs_new_protected:Npn \__ecnu_setmathfont:nn #1#2
   { \__um_setmathfont:nn {#2} {#1} }
 \cs_new_protected:Npn \__ecnu_setCJKmainfont:nn #1#2
-  { \__ecnu_set_family:nnn { \CJKrmdefault } {#2} {#1} }
+  { \setCJKmainfont {#1} [#2] }
 \cs_new_protected:Npn \__ecnu_setCJKsansfont:nn #1#2
-  { \__ecnu_set_family:nnn { \CJKsfdefault } {#2} {#1} }
+  { \setCJKsansfont {#1} [#2] }
 \cs_new_protected:Npn \__ecnu_setCJKmonofont:nn #1#2
-  { \__ecnu_set_family:nnn { \CJKttdefault } {#2} {#1} }
+  { \setCJKmonofont {#1} [#2] }
 \cs_new_protected:Npn \__ecnu_set_cjk_font_kai:nn #1#2
   { \__ecnu_set_family:nnn { ecnu@kai } {#2} {#1} }
 \cs_new_protected:Npn \ecnu@kai
@@ -692,6 +698,8 @@
     style     = gb7714-2015,
     seconds   = true,
     hyperref  = true,
+    gbpub     = false,
+    gbpunctin = false,
   } 
   { biblatex }
 \RequirePackage { biblatex }
@@ -1009,8 +1017,8 @@
         { 0.9 \textwidth } 
         { \expandafter\uline\expandafter{\l__ecnu_info_titleEN_tl} },
     info     / content     = \__ecnu_cover_info:,
-    title    / format      = \__ecnu_line_spread:n { 1.1 } \zihao { -1 } \bfseries,
-    titleEN  / format      = \__ecnu_line_spread:n { 1.1 } \zihao { 2 } \bfseries,
+    title    / format      = \__ecnu_line_spread:n { 1.1 } \zihao { 1 } \bfseries,
+    titleEN  / format      = \__ecnu_line_spread:n { 1.1 } \zihao { 1 } \bfseries,
     id       / bottom-skip = 0 pt plus 0.5 fill,
     logo     / bottom-skip = 0 pt plus 0.3 fill,
     titleEN  / bottom-skip = 0 pt plus 2.5 fill,
@@ -1147,6 +1155,7 @@
 \NewDocumentCommand \makeTOC { }
   {
     \addtocontents{toc}{\protect\thispagestyle{empty}}
+    \pagenumbering{roman}
     \tableofcontents
   }
 
@@ -1160,6 +1169,7 @@
         right   = 2.5 cm
       }
     \begin{titlepage}
+      \bool_if:NT \g__ecnu_pdfpagelabels_bool { \thispdfpagelabel{COVER} }
       \makecoveri
     \end{titlepage}
     \restoregeometry

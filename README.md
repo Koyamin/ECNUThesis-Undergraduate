@@ -7,6 +7,13 @@
 本模版使用 LaTeX3 重构了 [YijunYuan](https://github.com/YijunYuan) 的 [ECNU-Undergraduate-LaTeX](https://github.com/YijunYuan/ECNU-Undergraduate-LaTeX)，
 并将个人信息的填写、个性化设置、命令、环境等进行了一定的封装，让使用者可以更加方便地使用 LaTeX 进行创作。
 
+### Ver 0.1.3
+
+1. 修正了标题字号
+2. 改进了输出非打印版 pdf 文件的内嵌页码 (与页脚显示的效果无关)
+3. 取消了参考文献输出时缺失出版地的显示
+4. 修正了在正文中交叉引用附录的内容时错误的超链接
+
 ### Ver 0.1.2
 
 1. 模板中默认添加了对 `bicaption` 和 `booktabs` 两个宏包的引用，前者提供了符合学校要求的双语图表注释，后者提供了三线表所需要的组件。
@@ -33,7 +40,6 @@
 
 - 尾注功能未实现；
 - 附录中 `\caption` 不会另起新页
-- 在正文中交叉引用附录的内容会出现错误的超链接
 - ……
 
 ## 参考
