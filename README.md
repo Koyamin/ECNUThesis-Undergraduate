@@ -34,6 +34,8 @@
 
 请移步 [Wiki](https://github.com/Koyamin/ECNUThesis-Undergraduate/wiki) 阅读相关文档。
 
+**注意：为了保证正确的参考文献显示，请使用 `latexmk` 命令编译！！！**
+
 ## 不足与改进
 
 本模版仍有一些不足与值得改进之处。已知的不足如下所示。
