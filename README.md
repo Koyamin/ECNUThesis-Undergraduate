@@ -7,6 +7,16 @@
 本模版使用 LaTeX3 重构了 [YijunYuan](https://github.com/YijunYuan) 的 [ECNU-Undergraduate-LaTeX](https://github.com/YijunYuan/ECNU-Undergraduate-LaTeX)，
 并将个人信息的填写、个性化设置、命令、环境等进行了一定的封装，让使用者可以更加方便地使用 LaTeX 进行创作。
 
+### Ver 0.1.4
+
+1. 更改脚注编号为上标
+2. 将摘要等标题加粗，目录标题改为宋体
+3. 将页眉改为论文题目，页眉页脚字体改为小五号
+4. 将中文“摘要：”的字体改为宋体
+5. 将中文关键词的分隔符改为全角逗号
+6. 使目录只显示到两级
+7. 使附录中的章节不显示在目录中
+
 ### Ver 0.1.3
 
 1. 修正了标题字号
