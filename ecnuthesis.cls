@@ -435,10 +435,12 @@
       }
       { \int_use:N #1 }
   }
+
 \cs_set:Npn \@makefntext #1
   {
-    \mode_leave_vertical:
-    \hbox_to_wd:nn { 1.5 em } { \@thefnmark \hfil }
+    % \mode_leave_vertical:
+    % \hbox_to_wd:nn { 1.5 em } { \@thefnmark \hfil }
+    $^\text{\@thefnmark}$
     #1
   }
 
