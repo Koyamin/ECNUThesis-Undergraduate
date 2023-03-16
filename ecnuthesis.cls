@@ -1072,7 +1072,7 @@
     \mode_leave_vertical: \par \noindent
     \zihao{5}
     \group_begin: 
-      \sffamily \c__ecnu_name_abstract_tl \c__ecnu_colon_tl
+      \rmfamily\bfseries \c__ecnu_name_abstract_tl \c__ecnu_colon_tl
     \group_end:
     \par
   }
