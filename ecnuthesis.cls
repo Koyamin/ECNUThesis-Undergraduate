@@ -1103,6 +1103,7 @@
     \clearpage{\thispagestyle{empty}\cleardoublepage}
   }
 % 目录
+\setcounter{tocdepth}{1}
 \tl_const:Nn \c__ecnu_name_toc_tl { 目录 }
 \cs_new_protected:Npn \__ecnu_patch_cmd:Nnn #1#2#3
   {
