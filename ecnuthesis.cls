@@ -1142,11 +1142,13 @@
     \let\clearpage\relax
     \setcounter{chapter}{0}
     \setcounter{section}{0}
+    \addtocontents{toc}{\protect\setcounter{tocdepth}{-2}}
   }
 \cs_new_protected:Npn \__ecnu_appendix_end:
   {
     \endgroup 
     \clearpage{\thispagestyle{empty}\cleardoublepage} 
+    \addtocontents{toc}{\protect\setcounter{tocdepth}{1}}
   }
 \NewDocumentEnvironment { acknowledgement } { }
   { \__ecnu_acknowledgement_begin: } { \__ecnu_acknowledgement_end: }
