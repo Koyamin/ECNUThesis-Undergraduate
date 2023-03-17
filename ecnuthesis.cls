@@ -186,15 +186,15 @@
   }
 \pagestyle{fancy}
   \fancyhead[L,R]       { }
-  \fancyhead[C]         { \small 华东师范大学 \enrollYear 级本科毕业论文/设计 }
-  \fancyfoot[C]         { \small \thepage }
+  \fancyhead[C]         {  \sffamily\zihao{-5} \l__ecnu_info_title_tl }
+  \fancyfoot[C]         { \zihao{-5} \thepage }
   \fancyfoot[L,R]       { }
   \headheight = 13 pt
 \fancypagestyle{plain} 
   {
     \fancyhead[L,R]     { }
-    \fancyhead[C]       { \small 华东师范大学 \enrollYear 级本科毕业论文/设计 }
-    \fancyfoot[C]       { \small \thepage }
+    \fancyhead[C]       {  \sffamily\zihao{-5} \l__ecnu_info_title_tl }
+    \fancyfoot[C]       { \zihao{-5} \thepage }
     \fancyfoot[L,R]     { }
     \headheight = 13 pt
   }
@@ -435,10 +435,12 @@
       }
       { \int_use:N #1 }
   }
+
 \cs_set:Npn \@makefntext #1
   {
-    \mode_leave_vertical:
-    \hbox_to_wd:nn { 1.5 em } { \@thefnmark \hfil }
+    % \mode_leave_vertical:
+    % \hbox_to_wd:nn { 1.5 em } { \@thefnmark \hfil }
+    $^\text{\@thefnmark}$
     #1
   }
 
@@ -791,7 +793,19 @@
       \ctexset 
         { 
           chapter / numbering = false,
-          chapter / format    = \sffamily\centering,
+          chapter / format    = \sffamily\bfseries\centering,
+          chapter / titleformat = \zihao{-3},
+        }
+      \chapter* {#1}
+    \group_end:
+  }
+\cs_new_protected:Npn \__ecnu_table_of_contents_title:n #1
+  {
+    \group_begin:
+      \ctexset 
+        { 
+          chapter / numbering = false,
+          chapter / format    = \rmfamily\bfseries\centering,
           chapter / titleformat = \zihao{-3},
         }
       \chapter* {#1}
@@ -799,6 +813,7 @@
   }
 \cs_generate_variant:Nn \__ecnu_chapter:n { V }
 \cs_generate_variant:Nn \__ecnu_title:n { V }
+\cs_generate_variant:Nn \__ecnu_table_of_contents_title:n { V }
 \cs_new:Npn \__ecnu_blank_underline:n #1
   { \rule [ -0.5 ex ] {#1} { 0.4 pt } }
 \cs_new:Npn \__ecnu_line_spread:N #1
@@ -1057,7 +1072,7 @@
     \mode_leave_vertical: \par \noindent
     \zihao{5}
     \group_begin: 
-      \sffamily \c__ecnu_name_abstract_tl \c__ecnu_colon_tl
+      \rmfamily\bfseries \c__ecnu_name_abstract_tl \c__ecnu_colon_tl
     \group_end:
     \par
   }
@@ -1077,7 +1092,7 @@
   {
     \__ecnu_keywords:nNn
       { \sffamily \c__ecnu_name_keywords_tl \c__ecnu_colon_tl }
-      \l__ecnu_info_keywords_clist { ,~ }
+      \l__ecnu_info_keywords_clist { ， }
     \clearpage{\thispagestyle{empty}\cleardoublepage}
   }
 \cs_new_protected:Npn \__ecnu_abstractEN_end:
@@ -1088,6 +1103,7 @@
     \clearpage{\thispagestyle{empty}\cleardoublepage}
   }
 % 目录
+\setcounter{tocdepth}{1}
 \tl_const:Nn \c__ecnu_name_toc_tl { 目录 }
 \cs_new_protected:Npn \__ecnu_patch_cmd:Nnn #1#2#3
   {
@@ -1100,7 +1116,7 @@
   }
 \cs_set:Npn \tableofcontents 
   {
-    \__ecnu_title:V \contentsname
+    \__ecnu_table_of_contents_title:V \contentsname
     \vspace{10pt}
     \@starttoc{toc}
     \clearpage{\thispagestyle{empty}\cleardoublepage}
@@ -1126,11 +1142,13 @@
     \let\clearpage\relax
     \setcounter{chapter}{0}
     \setcounter{section}{0}
+    \addtocontents{toc}{\protect\setcounter{tocdepth}{-2}}
   }
 \cs_new_protected:Npn \__ecnu_appendix_end:
   {
     \endgroup 
     \clearpage{\thispagestyle{empty}\cleardoublepage} 
+    \addtocontents{toc}{\protect\setcounter{tocdepth}{1}}
   }
 \NewDocumentEnvironment { acknowledgement } { }
   { \__ecnu_acknowledgement_begin: } { \__ecnu_acknowledgement_end: }
