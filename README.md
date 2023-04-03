@@ -11,8 +11,6 @@
 
 请安装 TeX Live ，并使用 XeLaTeX 进行编译。
 
-**注意**：请安装 TeX Live 2022 版本，而非 TeX Live 2023，见 [#3](https://github.com/Koyamin/ECNUThesis-Undergraduate/issues/3)。
-
 若您的个人计算机中仍安装了老旧的 CTeX 套装，请毫不犹豫地卸载它，并安装最新版的 TeX Live。
 
 ## 使用方法
