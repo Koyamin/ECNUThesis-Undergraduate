@@ -7,6 +7,20 @@
 本模版使用 LaTeX3 重构了 [YijunYuan](https://github.com/YijunYuan) 的 [ECNU-Undergraduate-LaTeX](https://github.com/YijunYuan/ECNU-Undergraduate-LaTeX)，
 并将个人信息的填写、个性化设置、命令、环境等进行了一定的封装，让使用者可以更加方便地使用 LaTeX 进行创作。
 
+## 使用环境
+
+请安装 TeX Live ，并使用 XeLaTeX 进行编译。
+
+若您的个人计算机中仍安装了老旧的 CTeX 套装，请毫不犹豫地卸载它，并安装最新版的 TeX Live。
+
+## 使用方法
+
+请移步 [Wiki](https://github.com/Koyamin/ECNUThesis-Undergraduate/wiki) 阅读相关文档。
+
+**注意**：为了保证正确的参考文献显示，请使用 `latexmk` 命令编译。
+
+## 更新日志
+
 ### Ver 0.1.4
 
 1. 更改脚注编号为上标
@@ -33,18 +47,6 @@
 ### Ver 0.1.1
 
 在 `style` 设置中增加了 `fontMath` 的设置接口，以便使用者更加方便地更换数学公式字体。
-
-## 使用环境
-
-本模版只能使用 XeLaTeX 进行编译，使用其它 LaTeX 引擎将会导致编译失败。所以请安装最新版的 TeX Live ，并使用 XeLaTeX 进行编译。
-
-若您的个人计算机中仍安装了老旧的 CTeX 套装，请毫不犹豫地卸载它，并安装最新版的 TeX Live。
-
-## 使用方法
-
-请移步 [Wiki](https://github.com/Koyamin/ECNUThesis-Undergraduate/wiki) 阅读相关文档。
-
-**注意：为了保证正确的参考文献显示，请使用 `latexmk` 命令编译！！！**
 
 ## 不足与改进
 
