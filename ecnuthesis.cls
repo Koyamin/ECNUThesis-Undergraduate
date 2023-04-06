@@ -808,7 +808,7 @@
         { 
           chapter / numbering = false,
           chapter / format    = \rmfamily\bfseries\centering,
-          chapter / titleformat = \zihao{-3},
+          chapter / titleformat = \zihao{-4},
         }
       \chapter* {#1}
     \group_end:
