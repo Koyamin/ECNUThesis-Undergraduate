@@ -96,6 +96,7 @@
   }
 \captionsetup [ figure ] [ bi-second ] { name=Figure }
 \captionsetup [ table  ] [ bi-second ] { name=Table  }
+\captionsetup { justification=centering  }
 \geometry
   {
     % showframe,
