@@ -52,7 +52,7 @@
     heading     = true,
     zihao       = -4,
     fontset     = none,
-    linespread  = 1.5,
+    linespread  = 1.625,
     \g__ecnu_to_ctexart_clist,
   }
   { ctexrep }
