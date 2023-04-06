@@ -103,7 +103,8 @@
     a4paper,
     top       = 2.5 cm, 
     bottom    = 2.0 cm, 
-    footskip  = 0.7 cm,
+    footskip  = 0.5 cm,
+    headsep   = \dimexpr(9.55mm-11.7pt),
   }
 \bool_if:NTF \g__ecnu_twoside_bool 
   {
@@ -187,17 +188,17 @@
   }
 \pagestyle{fancy}
   \fancyhead[L,R]       { }
-  \fancyhead[C]         {  \sffamily\zihao{-5} \l__ecnu_info_title_tl }
-  \fancyfoot[C]         { \zihao{-5} \thepage }
+  \fancyhead[C]         { \sffamily\footnotesize \l__ecnu_info_title_tl }
+  \fancyfoot[C]         { \footnotesize \thepage }
   \fancyfoot[L,R]       { }
-  \headheight = 13 pt
+  \headheight = 11.7 pt
 \fancypagestyle{plain} 
   {
     \fancyhead[L,R]     { }
-    \fancyhead[C]       {  \sffamily\zihao{-5} \l__ecnu_info_title_tl }
-    \fancyfoot[C]       { \zihao{-5} \thepage }
+    \fancyhead[C]       { \sffamily\footnotesize \l__ecnu_info_title_tl }
+    \fancyfoot[C]       { \footnotesize \thepage }
     \fancyfoot[L,R]     { }
-    \headheight = 13 pt
+    \headheight = 11.7 pt
   }
 % 字体设置
 \tl_new:N \g__ecnu_cjk_fontset_tl
@@ -762,7 +763,7 @@
   {
     \mode_leave_vertical:
     \hbox_to_wd:nn {#1}
-      { \tl_map_inline:xn {#2} { ##1 \hfil } \unskip }
+      { \tl_map_inline:nn {#2} { ##1 \hfil } \unskip }
   }
 \cs_new_protected:Npn \__ecnu_center_box:nn #1#2
   {
@@ -800,7 +801,7 @@
       \chapter* {#1}
     \group_end:
   }
-\cs_new_protected:Npn \__ecnu_table_of_contents_title:n #1
+\cs_new_protected:Npn \__ecnu_toc_title:n #1
   {
     \group_begin:
       \ctexset 
@@ -814,7 +815,7 @@
   }
 \cs_generate_variant:Nn \__ecnu_chapter:n { V }
 \cs_generate_variant:Nn \__ecnu_title:n { V }
-\cs_generate_variant:Nn \__ecnu_table_of_contents_title:n { V }
+\cs_generate_variant:Nn \__ecnu_toc_title:n { V }
 \cs_new:Npn \__ecnu_blank_underline:n #1
   { \rule [ -0.5 ex ] {#1} { 0.4 pt } }
 \cs_new:Npn \__ecnu_line_spread:N #1
@@ -1117,7 +1118,7 @@
   }
 \cs_set:Npn \tableofcontents 
   {
-    \__ecnu_table_of_contents_title:V \contentsname
+    \__ecnu_toc_title:V \contentsname
     \vspace{10pt}
     \@starttoc{toc}
     \clearpage{\thispagestyle{empty}\cleardoublepage}
