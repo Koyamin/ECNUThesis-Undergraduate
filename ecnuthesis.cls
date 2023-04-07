@@ -797,6 +797,8 @@
           chapter / numbering = false,
           chapter / format    = \sffamily\bfseries\centering,
           chapter / titleformat = \zihao{-3},
+          chapter / beforeskip  = 7.125 bp,
+          chapter / afterskip   = 7.125 bp,
         }
       \chapter* {#1}
     \group_end:
