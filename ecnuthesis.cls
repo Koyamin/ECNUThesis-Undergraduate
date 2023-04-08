@@ -93,6 +93,7 @@
     hyperref,
     bicaption,
     booktabs,
+    etoolbox,
   }
 \captionsetup [ figure ] [ bi-second ] { name=Figure }
 \captionsetup [ table  ] [ bi-second ] { name=Table  }
@@ -103,7 +104,7 @@
     a4paper,
     top       = 2.5 cm, 
     bottom    = 2.0 cm, 
-    footskip  = 0.5 cm,
+    footskip  = 6 mm,
     headsep   = \dimexpr(9.55mm-11.7pt),
   }
 \bool_if:NTF \g__ecnu_twoside_bool 
@@ -1121,14 +1122,26 @@
 \cs_set:Npn \tableofcontents 
   {
     \__ecnu_toc_title:V \contentsname
-    \vspace{10pt}
-    \@starttoc{toc}
+    \group_begin:
+      \linespread{1.083}\selectfont
+      \@starttoc{toc}
+    \group_end:
     \clearpage{\thispagestyle{empty}\cleardoublepage}
   }
+% 目录具体格式
 \renewcommand{\cftchapleader}{\cftdotfill{1.0}}
 \renewcommand{\cftsecleader}{\cftdotfill{1.0}}
-\renewcommand{\cftsubsecleader}{\cftdotfill{1.0}}
-\setlength{\cftbeforechapskip}{0pt}
+\setlength{\cftchapnumwidth}{0em}
+\setlength{\cftsecnumwidth}{0pt}
+% \setlength{\cftbeforetoctitleskip}{0pt}
+% 目录章节间距
+\setlength{\cftbeforechapskip}{6pt}
+\setlength{\cftbeforechapskip}{6pt}
+\renewcommand{\@tocrmarg}{0pt}
+\pretocmd{\section}
+  { \ifnum\value{section}=0\addtocontents{toc}{\protect\vspace{6pt}}\fi }
+  {}{}
+
 % 附录
 \tl_const:Nn \c__ecnu_name_appendix_tl         { 附录 }
 \tl_const:Nn \c__ecnu_name_acknowledgement_tl  { 致谢 }
@@ -1177,8 +1190,11 @@
 \NewDocumentCommand \makeTOC { }
   {
     \addtocontents{toc}{\protect\thispagestyle{empty}}
-    \pagenumbering{roman}
-    \tableofcontents
+    \group_begin:
+      \pagestyle{empty}
+      \pagenumbering{roman}
+      \tableofcontents
+    \group_end:
   }
 
 \AtBeginDocument
