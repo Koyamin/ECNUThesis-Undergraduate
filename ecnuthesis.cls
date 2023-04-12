@@ -1123,7 +1123,7 @@
   {
     \__ecnu_toc_title:V \contentsname
     \group_begin:
-      \linespread{1.083}\selectfont
+      \linespread{1.2}\selectfont
       \@starttoc{toc}
     \group_end:
     \clearpage{\thispagestyle{empty}\cleardoublepage}
