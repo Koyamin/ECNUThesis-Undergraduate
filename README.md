@@ -19,6 +19,14 @@
 
 **注意**：为了保证正确的参考文献显示，请使用 `latexmk` 命令编译。
 
+## 已知问题及解决方案
+
+- TeX Live 2023 无法编译，或编译后排版异常（[#3](https://github.com/Koyamin/ECNUThesis-Undergraduate/issues/3)）
+  - 可能的解决方案见该 issue
+- 标题过长会导致封面被分为两页
+  - 可能的解决方案：在 `ecnuthesis.cls` 中将两处 `\__ecnu_line_spread:n { 1.1 }` 中的 `1.1` 酌情减小，比如改为 `\__ecnu_line_spread:n { 1 }`
+  - 注意：根据教务的相关回复，不建议调整字体大小
+
 ## 更新日志
 
 ### Ver 0.1.4
