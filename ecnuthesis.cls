@@ -63,7 +63,6 @@
     { mathrm=sym        } { unicode-math },
   }
   { \PassOptionsToPackage #1 }
-\RequirePackage { etoolbox }
 \LoadClass { ctexrep }
 % 导入宏包
 \PassOptionsToPackage { titles } { tocloft }
