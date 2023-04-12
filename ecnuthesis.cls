@@ -152,6 +152,8 @@
 \int_new:N   \l__ecnu_info_year_int
 \int_zero:N  \l__ecnu_info_year_int
 \int_new:N   \l__ecnu_enroll_year_int
+\int_new:N   \l__ecnu_info_graduation_year_int
+\int_zero:N  \l__ecnu_info_graduation_year_int
 \int_new:N   \l__ecnu_info_month_int
 \int_zero:N  \l__ecnu_info_month_int
 \clist_new:N \l__ecnu_info_keywords_clist
@@ -168,24 +170,40 @@
     academicTitle   .tl_set:N     = \l__ecnu_info_academicTitle_tl,
     year            .int_set:N    = \l__ecnu_info_year_int,
     month           .int_set:N    = \l__ecnu_info_month_int,
+    graduationYear  .int_set:N    = \l__ecnu_info_graduation_year_int,
     keywords        .clist_set:N  = \l__ecnu_info_keywords_clist,
     keywordsEN      .clist_set:N  = \l__ecnu_info_keywordsEN_clist
   }
-\int_compare:nNnTF { \l__ecnu_info_year_int } = { \c_zero_int } 
-  { \int_set_eq:NN \l__ecnu_info_year_int \c_sys_year_int } 
-  { }
-\int_compare:nNnTF { \l__ecnu_info_month_int } = { \c_zero_int } 
+\NewDocumentCommand \theyear { } 
   {
-    \int_set_eq:NN \l__ecnu_info_month_int \c_sys_month_int
-    \NewDocumentCommand \themonth { } 
-      { \int_use:N \l__ecnu_info_month_int } 
-  } 
-  { \NewDocumentCommand \themonth { } { \int_use:N \c_sys_month_int } }
-\NewDocumentCommand \theyear { } { \int_to_arabic:n {\l__ecnu_info_year_int} }
-\NewDocumentCommand \enrollYear { } 
-  { 
-    \int_set:Nn \l__ecnu_enroll_year_int {\l__ecnu_info_year_int - 4 }
-    \int_use:N  \l__ecnu_enroll_year_int
+    \int_compare:nNnTF { \l__ecnu_info_year_int } = { \c_zero_int } 
+      { \int_set_eq:NN \l__ecnu_info_year_int \c_sys_year_int } 
+      { }
+    \int_use:N \l__ecnu_info_year_int
+  }
+\NewDocumentCommand \themonth { } 
+  {
+    \int_compare:nNnTF { \l__ecnu_info_month_int } = { \c_zero_int } 
+      { \int_set_eq:NN \l__ecnu_info_month_int \c_sys_month_int }
+      { }
+    \int_use:N \l__ecnu_info_month_int
+  }
+\NewDocumentCommand \graduationYear { } 
+  {
+    \int_compare:nNnTF { \l__ecnu_info_graduation_year_int } = { \c_zero_int } 
+      {
+        \int_compare:nNnTF { \l__ecnu_info_year_int } = { \c_zero_int } 
+          {
+            \int_set_eq:NN  \l__ecnu_info_graduation_year_int 
+                            \c_sys_year_int
+          } 
+          {
+            \int_set_eq:NN  \l__ecnu_info_graduation_year_int 
+                            \l__ecnu_info_year_int
+          }
+      }
+      { }
+    \int_use:N  \l__ecnu_info_graduation_year_int
   }
 \pagestyle{fancy}
   \fancyhead[L,R]       { }
@@ -881,7 +899,7 @@
     \__ecnu_fixed_width_box:nn { \textwidth }
       {
         \bfseries\zihao { 4 }
-        \theyear \c__ecnu_thesisInfo_tl \hfill
+        \graduationYear \c__ecnu_thesisInfo_tl \hfill
         \c__ecnu_schoolNum_tl \c__ecnu_colon_tl \underline{10269}
       }
   }
