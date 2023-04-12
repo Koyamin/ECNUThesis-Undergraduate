@@ -1228,7 +1228,6 @@
       \makecoveri
     \end{titlepage}
     \restoregeometry
-    \makeTOC
   }
 
 \NewDocumentCommand \frontmatter { }
