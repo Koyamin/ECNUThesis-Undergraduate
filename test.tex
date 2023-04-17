@@ -83,7 +83,7 @@
     %   chinese   使用汉字进行编号 (即文科要求)
     %   (默认选项为 arabic )
     %
-    fontCJK = mac,
+    fontCJK = fandol,
     % 中文字体选择
     % 可用选项:
     %   fontCJK = fandol|windows|mac
@@ -101,6 +101,11 @@
     %   lm        使用 TeX 自带的 Latin Modern 数学字体
     %   times     使用 Times 风格的数学字体
     %   (默认选项为 lm )
+    %
+    % declarationPage = {./source/declaration.pdf},
+    % 扫描版声明页 PDF 文件
+    % 若该值为空则生成模版预定义的声明页；否则将插入指定路径所对应的 PDF 文件
+    % 默认值为空
     %
     bibResource = {./source/thesis-ref.bib},
     % 参考文献数据源
