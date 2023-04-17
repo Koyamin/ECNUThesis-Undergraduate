@@ -5,31 +5,36 @@
 ## 华东师范大学本科生学士学位论文模版
 
 本模版使用 LaTeX3 重构了 [YijunYuan](https://github.com/YijunYuan) 的 [ECNU-Undergraduate-LaTeX](https://github.com/YijunYuan/ECNU-Undergraduate-LaTeX)，
-并将个人信息的填写、个性化设置、命令、环境等进行了一定的封装，让使用者可以更加方便地使用 LaTeX 进行创作。
+并将个人信息的填写、个性化设置、命令、环境等进行了一定的封装，让使用者可以更加方便地利用 LaTeX 进行创作。
 
-## 使用环境
+## 使用本模版
 
-请安装 TeX Live ，并使用 XeLaTeX 进行编译。
+### 使用环境
+
+请安装最新的 TeX Live ，并使用 XeLaTeX 进行编译。
 
 若您的个人计算机中仍安装了老旧的 CTeX 套装，请毫不犹豫地卸载它，并安装最新版的 TeX Live。
 
-## 使用方法
+### 使用方法
 
 请移步 [Wiki](https://github.com/Koyamin/ECNUThesis-Undergraduate/wiki) 阅读相关文档。
 
 **注意**：为了保证正确的参考文献显示，请使用 `latexmk` 命令编译。
 
+## 重要提醒
+
+1. 本模板**未经学校相关部门审核及授权**，使用前请务必**权衡风险**。任何因使⽤本模板⽽引起的**论⽂格式审查问题**均与本模板作者⽆关。
+2. 本模版仍在开发中，接口的稳定性无法保证。
+
 ## 更新日志
 
 每个版本的详细更新日志见 [CHANGELOG.md](https://github.com/Koyamin/ECNUThesis-Undergraduate/blob/main/CHANGELOG.md)。
 
-## 不足与改进
+## 贡献
 
-本模版仍有一些不足与值得改进之处。已知的不足如下所示。
+若您对本模版有改进意见或建议，欢迎您提交 [Issues](https://github.com/Koyamin/ECNUThesis-Undergraduate/issues) 以及 [Pull requests](https://github.com/Koyamin/ECNUThesis-Undergraduate/pulls)。
 
-- 尾注功能未实现；
-- 附录中 `\caption` 不会另起新页
-- ……
+若您在使用本模版的过程中有疑问，请移步 [Discussions](https://github.com/Koyamin/ECNUThesis-Undergraduate/discussions) 进行讨论。
 
 ## 参考
 
