@@ -780,8 +780,9 @@
 \cs_new_protected:Npn \__ecnu_spread_box:nn #1#2
   {
     \mode_leave_vertical:
-    \hbox_to_wd:nn {#1} {#2}
+    \hbox_to_wd:nn {#1} { \tl_map_inline:nn {#2} { ##1 \hfil } \unskip }
   }
+\cs_generate_variant:Nn \__ecnu_spread_box:nn { no }
 \cs_new_protected:Npn \__ecnu_center_box:nn #1#2
   {
     \mode_leave_vertical:
@@ -881,7 +882,7 @@
           \bfseries
           \clist_pop:NN \l__ecnu_tmpa_clist \l__ecnu_tmpa_tl
           \clist_pop:NN \l__ecnu_tmpb_clist \l__ecnu_tmpb_tl
-          \__ecnu_spread_box:nn { 4 em } { \l__ecnu_tmpa_tl }
+          \__ecnu_spread_box:no { 4 em } { \l__ecnu_tmpa_tl }
           \c__ecnu_colon_tl
           \underline{\__ecnu_center_box:nn { 6 cm } { \l__ecnu_tmpb_tl }}
           \skip_vertical:n { 1 ex }
