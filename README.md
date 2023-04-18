@@ -19,12 +19,16 @@
 
 请移步 [Wiki](https://github.com/Koyamin/ECNUThesis-Undergraduate/wiki) 阅读相关文档。
 
-**注意**：为了保证正确的参考文献显示，请使用 `latexmk` 命令编译。
+**注意**：为了保证正确的参考文献显示，请使用 `latexmk` 命令编译。具体方法详见 [编译](https://github.com/Koyamin/ECNUThesis-Undergraduate/wiki/使用模版编写论文#编译)。
+
+### 帮助
+
+若您在使用本模版的过程中有疑问，请先参考 [Wiki](https://github.com/Koyamin/ECNUThesis-Undergraduate/wiki) 中的 [常见问题](https://github.com/Koyamin/ECNUThesis-Undergraduate/wiki)。若仍未能解决您的疑问，请移步 [Discussions](https://github.com/Koyamin/ECNUThesis-Undergraduate/discussions) 进行讨论。
 
 ## 重要提醒
 
-1. 本模板**未经学校相关部门审核及授权**，使用前请务必**权衡风险**。任何因使⽤本模板⽽引起的**论⽂格式审查问题**均与本模板作者⽆关。
-2. 本模版仍在开发中，接口的稳定性无法保证。
+1. 本模版**未经学校相关部门授权与审核**，使用前请务必**权衡风险**。任何因使用本模版而引起的**论文格式审查问题**均与本模版作者无关。
+2. 本模版仍在开发中，接口的稳定性无法保证。因此，在撰写论文的过程中，请慎重考虑是否需要同步更新模版。
 
 ## 更新日志
 
@@ -33,8 +37,6 @@
 ## 贡献
 
 若您对本模版有改进意见或建议，欢迎您提交 [Issues](https://github.com/Koyamin/ECNUThesis-Undergraduate/issues) 以及 [Pull requests](https://github.com/Koyamin/ECNUThesis-Undergraduate/pulls)。
-
-若您在使用本模版的过程中有疑问，请移步 [Discussions](https://github.com/Koyamin/ECNUThesis-Undergraduate/discussions) 进行讨论。
 
 ## 参考
 
