@@ -23,7 +23,7 @@
 
 ### 帮助
 
-若您在使用本模版的过程中有疑问，请先参考 [Wiki](https://github.com/Koyamin/ECNUThesis-Undergraduate/wiki) 中的 [常见问题](https://github.com/Koyamin/ECNUThesis-Undergraduate/wiki)。若仍未能解决您的疑问，请移步 [Discussions](https://github.com/Koyamin/ECNUThesis-Undergraduate/discussions) 进行讨论。
+若您在使用本模版的过程中有疑问，请先参考 [Wiki](https://github.com/Koyamin/ECNUThesis-Undergraduate/wiki) 中的 [常见问题](https://github.com/Koyamin/ECNUThesis-Undergraduate/wiki/常见问题)。若仍未能解决您的疑问，请移步 [Discussions](https://github.com/Koyamin/ECNUThesis-Undergraduate/discussions) 进行讨论。
 
 ## 重要提醒
 
