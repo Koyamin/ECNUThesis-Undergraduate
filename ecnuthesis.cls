@@ -1,4 +1,4 @@
-% \NeedsTeXFormat{LaTeX2e}
+\NeedsTeXFormat{LaTeX2e}
 \RequirePackage{expl3}
 \GetIdInfo $Id: ecnuthesis.cls 0.2.1 2022-04-20 15:00:00Z Koyamin <koyafumin@gmail.com> Qucheng <i@qcmiao.cn> $
   {Undergraduate Thesis Template for East China Normal University}
