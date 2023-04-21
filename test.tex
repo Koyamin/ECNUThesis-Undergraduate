@@ -1,9 +1,13 @@
-\documentclass[printMode]{ecnuthesis}
-% 模版选项:
-% printMode     是否开启打印模式, 若缺省则为关闭, 反之则为开启
+\documentclass[declarePage]{ecnuthesis}
+% 模版选项
+% 模版选项是指在导入文档类的时候所指定的选项
+% \documentclass[<模版选项>]{ecnuthesis}
+% 可用的模版选项:
+%   printMode     是否开启打印模式, 若缺省则为关闭, 反之则为开启
+%   declarePage   是否生成声明页, 若缺省则不生成, 反之则生成
 % 用法示例
-% \documentclass[printMode]{ecnuthesis}   (开启打印模式, 适合双面打印)
-% \documentclass{ecnuthesis}              (关闭打印模式, 适合提交电子版)
+%   \documentclass[printMode]{ecnuthesis}   (开启打印模式, 适合双面打印)
+%   \documentclass{ecnuthesis}              (关闭打印模式, 适合提交电子版)
 
 \ecnuSetup {
   % 参数设置
@@ -102,7 +106,7 @@
     %   times     使用 Times 风格的数学字体
     %   (默认选项为 lm )
     %
-    % declarationPage = {./source/declaration.pdf},
+    % declarePageResource = {./source/declaration.pdf},
     % 扫描版声明页 PDF 文件
     % 若该值为空则生成模版预定义的声明页；否则将插入指定路径所对应的 PDF 文件
     % 默认值为空
