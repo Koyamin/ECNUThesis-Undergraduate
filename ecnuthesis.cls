@@ -1157,7 +1157,7 @@
 \tl_new:N \l__ecnu_declaration_page_tl
 \keys_define:nn { ecnu / style }
   {
-    declarationPage .code:n =
+    declarePageResource .code:n =
       {
         \tl_set_eq:NN \l__ecnu_declaration_page_tl \l_keys_value_tl
         \RequirePackage { pdfpages }
