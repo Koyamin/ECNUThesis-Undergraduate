@@ -1,6 +1,6 @@
 \NeedsTeXFormat{LaTeX2e}
 \RequirePackage{expl3}
-\GetIdInfo $Id: ecnuthesis.cls 0.1.3 2021-05-11 15:00:00Z Koyamin <koyafumin@gmail.com> Qucheng <i@qcmiao.cn> $
+\GetIdInfo $Id: ecnuthesis.cls 0.2.1 2022-04-20 15:00:00Z Koyamin <koyafumin@gmail.com> Qucheng <i@qcmiao.cn> $
   {Undergraduate Thesis Template for East China Normal University}
 \ProvidesExplClass{\ExplFileName}
   {\ExplFileDate}{\ExplFileVersion}{\ExplFileDescription}
@@ -1232,7 +1232,7 @@
   {
     \__ecnu_toc_title:V \contentsname
     \group_begin:
-      \linespread{1.2}\selectfont
+    \__ecnu_line_spread:n {1.2}
       \@starttoc{toc}
     \group_end:
     \clearpage{\thispagestyle{empty}\cleardoublepage}
