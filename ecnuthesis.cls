@@ -1,4 +1,4 @@
-\NeedsTeXFormat{LaTeX2e}
+% \NeedsTeXFormat{LaTeX2e}
 \RequirePackage{expl3}
 \GetIdInfo $Id: ecnuthesis.cls 0.2.1 2022-04-20 15:00:00Z Koyamin <koyafumin@gmail.com> Qucheng <i@qcmiao.cn> $
   {Undergraduate Thesis Template for East China Normal University}
@@ -22,6 +22,8 @@
 % 设置选项
 \bool_new:N \g__ecnu_twoside_bool
 \bool_set_false:N \g__ecnu_twoside_bool
+\bool_new:N \g__ecnu_gen_declaration_page_bool
+\bool_set_false:N \g__ecnu_gen_declaration_page_bool
 \clist_new:N \g__ecnu_to_ctexart_clist
 \__ecnu_msg_new:nn { unknown-option }
   { The~ class~ option~ "\l_keys_key_tl"~ is~ unknown. }
@@ -32,17 +34,25 @@
       {
         \clist_gput_right:Nn \g__ecnu_to_ctexart_clist { twoside }
         \bool_set_true:N     \g__ecnu_twoside_bool
-        \bool_set_false:N    \g__ecnu_pdfpagelabels_bool
       },
-      printMode / false .code:n = 
+    printMode / false .code:n = 
       {
         \clist_gput_right:Nn \g__ecnu_to_ctexart_clist { oneside }
         \bool_set_false:N    \g__ecnu_twoside_bool
-        \bool_set_true:N     \g__ecnu_pdfpagelabels_bool
       },
-    printMode   .default:n = true,
-    printMode   .initial:n = false,
-    unknown .code:n = { \__ecnu_error:n { unknown-option } }
+    printMode   .default:n = { true },
+    printMode   .initial:n = { false },
+
+    declarePage   .value_forbidden:n = true,
+    declarePage   .code:n =
+      {
+        \bool_set_true:N    \g__ecnu_gen_declaration_page_bool
+      },
+    
+    unknown .code:n =
+      {
+        \__ecnu_error:n { unknown-option }
+      }
   }
 \ProcessKeysOptions { ecnu / option }
 % 导入 ctex 文档类
@@ -67,10 +77,6 @@
 % 导入宏包
 \PassOptionsToPackage { titles } { tocloft }
 \PassOptionsToPackage { hidelinks, hypertexnames=false } { hyperref }
-\bool_if:NF \g__ecnu_pdfpagelabels_bool
-  {
-    \PassOptionsToPackage { pdfpagelabels=false } { hyperref }
-  }
 \RequirePackage
   {
     geometry,
@@ -1300,9 +1306,13 @@
     \cleardoublepage
     \thispagestyle { empty }
     \tl_set:Nn \thepage { C }
-    \tl_if_empty:NTF \l__ecnu_declaration_page_tl
-      { \UseInstance { ecnu / cover } { cover-ii-default } }
-      { \includepdf { \l__ecnu_declaration_page_tl } }
+    \bool_if:NTF \g__ecnu_gen_declaration_page_bool
+      {
+        \tl_if_empty:NTF \l__ecnu_declaration_page_tl
+          { \UseInstance { ecnu / cover } { cover-ii-default } }
+          { \includepdf { \l__ecnu_declaration_page_tl } }
+      }
+      {}
   }
 % 目录命令封装
 \NewDocumentCommand \makeTOC { }
@@ -1325,7 +1335,6 @@
         right   = 3.0 cm
       }
     \begin{titlepage}
-      \bool_if:NT \g__ecnu_pdfpagelabels_bool { \thispdfpagelabel{COVER} }
       \makecoveri \newpage \makecoverii
     \end{titlepage}
     \restoregeometry
