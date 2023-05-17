@@ -980,44 +980,6 @@
   }
 %    \end{macrocode}
 %
-% \subsection{页眉页脚设置}
-%
-% 清除默认页眉页脚格式。
-%    \begin{macrocode}
-\fancyhf { }
-%    \end{macrocode}
-%
-% 页眉样式。
-%    \begin{macrocode}
-\fancyhead[C]   { \footnotesize \sffamily \l_@@_info_title_tl }
-%    \end{macrocode}
-%
-% 页脚样式。
-%    \begin{macrocode}
-\fancyfoot[C]   { \footnotesize \thepage }
-%    \end{macrocode}
-%
-%
-% \begin{macro}{\cleardoublepage}
-% 重定义 \tn{cleardoublepage}，使得偶数页面在没有内容时也不显示页眉页脚，见
-%    \begin{macrocode}
-\RenewDocumentCommand \cleardoublepage { }
-  {
-    \clearpage
-    \bool_if:NT \g_@@_twoside_bool
-      {
-        \int_if_odd:nF \c@page
-          { \hbox:n { } \thispagestyle { empty } \newpage }
-      }
-  }
-%    \end{macrocode}
-% \end{macro}
-%
-% 由于 \pkg{ctex} 宏包使用 \texttt{heading} 选项后，会将页面格式设置为 \texttt{headings}。
-% 因此需要在调用 \pkg{ctex} 后重新将 \cs{pagestyle} 设置为 \texttt{fancy}。
-%    \begin{macrocode}
-\pagestyle { fancy }
-%    \end{macrocode}
 %
 % \subsection{章节标题结构}
 %
@@ -1039,6 +1001,7 @@
       beforeskip    = 1ex,
       afterskip     = 2.5ex plus .2ex,
       fixskip       = true,
+      tocline       = {\CTEXifname{\protect\numberline{\CTEXthechapter}}{}#2}
     },
     section = {
       format        = \sffamily\normalsize,
@@ -1236,6 +1199,44 @@
 %    \end{macrocode}
 % \end{macro}
 %
+% \subsection{页眉页脚设置}
+%
+% 清除默认页眉页脚格式。
+%    \begin{macrocode}
+\fancyhf { }
+%    \end{macrocode}
+%
+% 页眉样式。
+%    \begin{macrocode}
+\fancyhead[C]   { \footnotesize \sffamily \l_@@_info_title_tl }
+%    \end{macrocode}
+%
+% 页脚样式。
+%    \begin{macrocode}
+\fancyfoot[C]   { \footnotesize \thepage }
+%    \end{macrocode}
+%
+%
+% \begin{macro}{\cleardoublepage}
+% 重定义 \tn{cleardoublepage}，使得偶数页面在没有内容时也不显示页眉页脚，见
+%    \begin{macrocode}
+\RenewDocumentCommand \cleardoublepage { }
+  {
+    \clearpage
+    \bool_if:NT \g_@@_twoside_bool
+      {
+        \int_if_odd:nF \c@page
+          { \hbox:n { } \thispagestyle { empty } \newpage }
+      }
+  }
+%    \end{macrocode}
+% \end{macro}
+%
+% 由于 \pkg{ctex} 宏包使用 \texttt{heading} 选项后，会将页面格式设置为 \texttt{headings}。
+% 因此需要在调用 \pkg{ctex} 后重新将 \cs{pagestyle} 设置为 \texttt{fancy}。
+%    \begin{macrocode}
+\pagestyle { fancy }
+%    \end{macrocode}
 %
 % \subsection{脚注}
 %
@@ -1486,59 +1487,43 @@
   }
 %    \end{macrocode}
 %
+%
+%
+% 使用 \pkg{tocloft} 设置目录格式。
+%    \begin{macrocode}
+\PassOptionsToPackage { titles } { tocloft }
+\RequirePackage { tocloft }
+\renewcommand{\cftchapleader}{\bfseries\cftdotfill{1.0}}
+\renewcommand{\cftsecleader}{\cftdotfill{1.0}}
+\setlength{\cftbeforechapskip}{6pt}
+\setlength{\cftchapnumwidth}{0pt}
+\setlength{\cftsecnumwidth}{0pt}
+\renewcommand{\@tocrmarg}{0pt}
+\renewcommand{\cftchapfillnum}[1]{
+  {\cftchapleader}\nobreak
+  {\cftchappagefont #1}\cftchapafterpnum\par
+}
+\renewcommand{\cftsecfillnum}[1]{
+  {\cftsecleader}\nobreak
+  {\cftsecpagefont #1}\cftsecafterpnum\par
+}
+%    \end{macrocode}
+%
 % \begin{macro}{\tableofcontents}
-% 修改 \cs{tableofcontents} 以删除页眉页脚，
-% 并出现在目录及 PDF 书签中。来自于 \LaTeXe{} 标准文档类
+% 修改 \cs{tableofcontents}。来自于 \LaTeXe{} 标准文档类
 % \file{book.cls}
 %    \begin{macrocode}
-\@@_patch_cmd:Nnn \tableofcontents
+\RenewDocumentCommand \tableofcontents { }
   {
-    \chapter*{\contentsname
-      \@mkboth{\MakeUppercase\contentsname}
-              {\MakeUppercase\contentsname}}
-  }
-  {
-    \pagestyle{empty}
     \@@_toc_title:V \contentsname
-  }
-%    \end{macrocode}
-% \end{macro}
-%
-% \begin{macro}[int]{\@starttoc}
-% 修改 \tn{@starttoc} 的定义以调整目录内容的行距。另外，
-% 在打印模式下保证页数为偶数。
-%    \begin{macrocode}
-\@@_patch_cmd:Nnn \@starttoc
-  { \begingroup }
-  {
-    \begingroup
-      \@@_line_spread:n { 1.2 }
-  }
-\@@_patch_cmd:Nnn \@starttoc
-  { \endgroup }
-  {
-    \endgroup
+    \group_begin:
+      \@@_line_spread:n {1.2}
+      \@starttoc{toc}
+    \group_end:
     \cleardoublepage
   }
 %    \end{macrocode}
 % \end{macro}
-%
-% 设置目录格式。其中章节上方的竖直间距为 6 pt。
-%    \begin{macrocode}
-\RequirePackage { titletoc }
-\titlecontents{chapter}
-  [0em]
-  {\vspace{6pt}\bfseries\contentsmargin{0pt}}
-  {\thecontentslabel}
-  {}
-  {\titlerule*[0.5pc]{.}\thecontentspage}
-\titlecontents{section}
-  [2em]
-  {\contentsmargin{0pt}}
-  {\thecontentslabel}
-  {}
-  {\titlerule*[0.5pc]{.}\thecontentspage}
-%    \end{macrocode}
 %
 % 若某章下有一个或多个小节，则目录中该章与该节中应有 6 pt 的
 % 竖直间距。
