@@ -1148,6 +1148,7 @@
           chapter / numbering = false,
           chapter / format    = \sffamily\bfseries\centering,
           chapter / titleformat = \large,
+          chapter / afterskip = 3.5ex plus 0.5ex,
         }
       \chapter {#1}
     \group_end:
@@ -1493,20 +1494,29 @@
 %    \begin{macrocode}
 \PassOptionsToPackage { titles } { tocloft }
 \RequirePackage { tocloft }
-\renewcommand{\cftchapleader}{\bfseries\cftdotfill{1.0}}
-\renewcommand{\cftsecleader}{\cftdotfill{1.0}}
+\RenewDocumentCommand \cftchapleader { }
+  {\bfseries\cftdotfill{1.0}}
+\RenewDocumentCommand \cftsecleader { }
+  {\cftdotfill{1.0}}
 \setlength{\cftbeforechapskip}{6pt}
 \setlength{\cftchapnumwidth}{0pt}
 \setlength{\cftsecnumwidth}{0pt}
-\renewcommand{\@tocrmarg}{0pt}
-\renewcommand{\cftchapfillnum}[1]{
-  {\cftchapleader}\nobreak
-  {\cftchappagefont #1}\cftchapafterpnum\par
-}
-\renewcommand{\cftsecfillnum}[1]{
-  {\cftsecleader}\nobreak
-  {\cftsecpagefont #1}\cftsecafterpnum\par
-}
+\RenewDocumentCommand \@tocrmarg { } {0pt}
+%    \end{macrocode}
+%
+% 重定义 \cs{cftchapfillnum} 和 \cs{cftsecfillnum}，以去除
+% 页码前的空白。
+%    \begin{macrocode}
+\RenewDocumentCommand \cftchapfillnum { m } 
+  {
+    {\cftchapleader}\nobreak
+    {\cftchappagefont #1}\cftchapafterpnum\par
+  }
+\RenewDocumentCommand \cftsecfillnum { m }
+  {
+    {\cftsecleader}\nobreak
+    {\cftsecpagefont #1}\cftsecafterpnum\par
+  }
 %    \end{macrocode}
 %
 % \begin{macro}{\tableofcontents}
@@ -1535,17 +1545,6 @@
       { }
   }
 %    \end{macrocode}
-%
-%
-%
-%
-%
-%
-%
-%
-%
-%
-%
 %
 %
 %
@@ -1654,16 +1653,6 @@
 % \end{macro}
 %
 %
-%
-%
-%
-%
-%
-%
-%
-%
-%
-%
 % \subsection{附录}
 %
 % \begin{environment}{appendix}
@@ -1701,19 +1690,6 @@
 % \end{macro}
 %
 %
-%
-%
-%
-%
-%
-%
-%
-%
-%
-%
-%
-%
-%
 % \subsection{致谢}
 %
 % \begin{environment}{acknowledgement}
@@ -1748,16 +1724,85 @@
 %    \end{macrocode}
 % \end{macro}
 %
-% \subsection{参考文献相关设置}
+% \subsection{参考文献}
 %
+% 模版使用 \cs{biblatex} 和 Biber 处理参考文献。
 %
+% \begin{variable}{\l_@@_bib_resource_tl}
+% 声明变量。
+%    \begin{macrocode}
+\tl_new:N \l_@@_bib_resource_tl
+%    \end{macrocode}
+% \end{variable}
 %
+% \begin{macro}{style/fontCJK}
+% 定义参考文献数据库路径。
+%    \begin{macrocode}
+\keys_define:nn { ecnu / style }
+  {
+    bibResource .tl_set:N = \l_@@_bib_resource_tl
+  }
+%    \end{macrocode}
+% \end{macro}
 %
+% \pkg{biblatex} 会写入 begindocument/before 钩子
+%    \begin{macrocode}
+\@@_gadd_ltxhook:nn { env/document/begin }
+{
+  \@@_biblatex_pre_setup:
+  \RequirePackage { biblatex }
+  \@@_biblatex_post_setup:
+}
+%    \end{macrocode}
 %
+% \begin{macro}{\@@_biblatex_pre_setup:, \@@_biblatex_post_setup:}
+% biblatex 相关设置。
+%    \begin{macrocode}
+\cs_new_protected:Npn \@@_biblatex_pre_setup:
+  {
+    \PassOptionsToPackage 
+    {
+      backend   = biber,
+      style     = gb7714-2015,
+      seconds   = true,
+      hyperref  = true,
+      gbpub     = false,
+      gbpunctin = false,
+    } 
+    { biblatex }
+  }
+\cs_new_protected:Npn \@@_biblatex_post_setup:
+  {
+    \exp_args:NV \addbibresource \l_@@_bib_resource_tl
+    \@@_biblatex_allow_url_break:
+    \setlength{\bibitemsep}{0pt}
+    \defbibheading { bibliography } [ \bibname ] 
+      { \@@_title:n {##1} }
+  }
+%    \end{macrocode}
+% \end{macro}
 %
+% \begin{macro}{\@@_biblatex_allow_url_break}
+% \pkg{biblatex} 下允许 URL 在字母、数字和一些特殊符号处断行。
+%    \begin{macrocode}
+\cs_new:Npn \@@_biblatex_allow_url_break:
+  {
+    \int_set_eq:NN \c@biburlucpenalty  \c_one_int
+    \int_set_eq:NN \c@biburlnumpenalty \c_one_int
+    \int_set_eq:NN \c@biburllcpenalty  \c_one_int
+  }
+%    \end{macrocode}
+% \end{macro}
 %
-%
-%
+% \begin{macro}{}
+%    \begin{macrocode}
+\NewDocumentCommand \PrintReference {} 
+  {
+    \printbibliography
+    \cleardoublepage
+  }
+%    \end{macrocode}
+% \end{macro}
 %
 %
 %
