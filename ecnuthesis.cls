@@ -110,7 +110,8 @@
     top       = 2.5 cm, 
     bottom    = 2.0 cm, 
     footskip  = 6 mm,
-    headsep   = \dimexpr(9.55mm-11.7pt),
+    headsep   = \dimexpr(9.55mm-\headheight),
+    headheight = 11.7pt
   }
 \bool_if:NTF \g__ecnu_twoside_bool 
   {
@@ -215,14 +216,14 @@
   \fancyhead[C]         { \sffamily\footnotesize \l__ecnu_info_title_tl }
   \fancyfoot[C]         { \footnotesize \thepage }
   \fancyfoot[L,R]       { }
-  \headheight = 11.7 pt
+  % \headheight = 11.7 pt
 \fancypagestyle{plain} 
   {
     \fancyhead[L,R]     { }
     \fancyhead[C]       { \sffamily\footnotesize \l__ecnu_info_title_tl }
     \fancyfoot[C]       { \footnotesize \thepage }
     \fancyfoot[L,R]     { }
-    \headheight = 11.7 pt
+    % \headheight = 11.7 pt
   }
 % 字体设置
 \tl_new:N \g__ecnu_cjk_fontset_tl
@@ -524,6 +525,7 @@
               titleformat   = \sffamily\zihao{-4},
               numberformat  = \zihao{-4},
               aftername  = \ ,
+              tocline = {\CTEXifname{\protect\numberline{\CTEXthechapter}}{}##2},
             },
             section = {
               name = {,},
@@ -569,6 +571,7 @@
               number  = \chinese{chapter},
               format  = \sffamily\zihao{-4},
               aftername  = \ ,
+              tocline = {\CTEXifname{\protect\numberline{\CTEXthechapter}}{}##2},
             },
             section = {
               name    = {（,）},
@@ -1112,7 +1115,7 @@
     title    / content     =
       \__ecnu_fixed_width_center_box:nn
         { 0.9 \textwidth } 
-        { \expandafter\uline\expandafter{\l__ecnu_info_title_tl} },
+        { \uline{\l__ecnu_info_title_tl} },
     titleEN  / content     = 
       \__ecnu_fixed_width_center_box:nn
         { 0.9 \textwidth } 
@@ -1244,15 +1247,24 @@
     \clearpage{\thispagestyle{empty}\cleardoublepage}
   }
 % 目录具体格式
-\renewcommand{\cftchapleader}{\cftdotfill{1.0}}
-\renewcommand{\cftsecleader}{\cftdotfill{1.0}}
-\setlength{\cftchapnumwidth}{0em}
+\RenewDocumentCommand \cftchapleader { }
+  {\bfseries\cftdotfill{1.0}}
+\RenewDocumentCommand \cftsecleader { }
+  {\cftdotfill{1.0}}
+\setlength{\cftbeforechapskip}{6pt}
+\setlength{\cftchapnumwidth}{0pt}
 \setlength{\cftsecnumwidth}{0pt}
-% \setlength{\cftbeforetoctitleskip}{0pt}
-% 目录章节间距
-\setlength{\cftbeforechapskip}{6pt}
-\setlength{\cftbeforechapskip}{6pt}
-\renewcommand{\@tocrmarg}{0pt}
+\RenewDocumentCommand \@tocrmarg { } {0pt}
+\RenewDocumentCommand \cftchapfillnum { m }
+  {
+    {\cftchapleader}\nobreak
+    {\cftchappagefont #1}\cftchapafterpnum\par
+  }
+\RenewDocumentCommand \cftsecfillnum { m }
+  {
+    {\cftsecleader}\nobreak
+    {\cftsecpagefont #1}\cftsecafterpnum\par
+  }
 \pretocmd{\section}
   { \ifnum\value{section}=0\addtocontents{toc}{\protect\vspace{6pt}}\fi }
   {}{}
