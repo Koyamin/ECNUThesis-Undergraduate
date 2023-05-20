@@ -739,6 +739,7 @@
   {
     \exp_args:NV \addbibresource \l__ecnu_bib_resource_tl
     \__ecnu_biblatex_allow_url_break:
+    \setlength{\bibitemsep}{0pt}
     \defbibheading { bibliography } [ \bibname ] 
     { 
       \phantomsection
