@@ -1,9 +1,100 @@
-\documentclass[printMode]{ecnuthesis}
-
+\documentclass[printMode=false, declarePage=false]{ecnuthesis}
+% 
+% 本模板源代码托管在
+% https://github.com/Koyamin/ECNUThesis-Undergraduate
+% 
+% 
 \ecnuSetup{
+  info = {
+    title = {基于微信小程序的线下课程考勤系统的设计与实现},
+    % 中文标题
+    %
+    titleEN = {Design and Implementation of Offline Course Attendance System Based on WeChat Mini Program},
+    % 英文标题
+    %
+    author = {张三},
+    % 作者姓名
+    %
+    studentID = {10000000000},
+    % 作者学号
+    %
+    department = {理工学院},
+    % 学院名称
+    %
+    major = {计算机科学与技术},
+    % 专业名称
+    %
+    supervisor = {李四},
+    % 指导教师姓名
+    %
+    academicTitle = {教授},
+    % 指导教师职称
+    %
+    year  = 2077,
+    % 论文完成年份
+    %
+    month = 3,
+    % 论文完成月份
+    %
+    graduationYear = 2077,
+    % 内封面毕业届别
+    % 说明:
+    %   若 graduationYear 字段为空，则内封面毕业届别为 year
+    %
+    keywords = {XML, XSL, 数据批处理, “双赢”},
+    % 中文关键词
+    % 请使用英文逗号 "," 以分隔
+    %
+    keywordsEN = {XML, XSL, batch, ‘Win-Win’},
+    % 英文关键词
+    % 请使用英文逗号 "," 以分隔
+    %
+  },
   style = {
+    numbering = arabic,
+    % 章节编号样式
+    % 可用选项:
+    %   numbering = arabic|alpha|chinese
+    % 说明:
+    %   arabic    使用数字进行编号 (即理科要求)
+    %   alpha     使用字母进行编号 (即外文要求)
+    %   chinese   使用汉字进行编号 (即文科要求)
+    %   (默认选项为 arabic )
+    %
+    font = times,
+    % 西文字体选择
+    % 可用选项:
+    %   font = lm|times|xits
+    % 说明:
+    %   lm        使用 TeX 自带的 Latin Modern 字体
+    %   lm        使用 TeX 自带的 XITS 系列字体
+    %   times     使用 Times 风格的西文字体
+    %   (默认选项为 xits )
+    %
     fontCJK = windows,
-    % numbering = chinese,
+    % 中文字体选择
+    % 可用选项:
+    %   fontCJK = fandol|windows|mac
+    % 说明:
+    %   fandol    使用 TeX 自带的 fandol 字体
+    %   windows   使用 Windows 系统内的字体 (中易)
+    %   mac       使用 MacOS 系统内的字体
+    %   (默认选项为 fandol )
+    %
+    logoResource = {./source/inner-cover(contains_font).eps},
+    % 封面插图数据源
+    % 模版已自带, 位于 ./source/inner-cover(contains_font).eps
+    % 默认值为空
+    %
+    % declarePageResource = {./source/declaration.pdf},
+    % 扫描版声明页 PDF 文件
+    % 若该值为空则生成模版预定义的声明页；否则将插入指定路径所对应的 PDF 文件
+    % 默认值为空
+    %
+    bibResource = {./source/thesis-ref.bib},
+    % 参考文献数据源
+    % 由于使用的是 biber + biblatex , 所以必须明确给出 .bib 后缀名
+    %
   }
 }
 
@@ -13,17 +104,57 @@
 
 \tableofcontents
 
+\frontmatter
+
 \begin{abstract}
-  本文通过一个实际的对日软件外包案件的设计
+  本文通过一个实际的对日软件外包案件的设计和实现，经历了整个软件开发的过程，包括系统分析、概要设计、详细设计、编码、测试，为某制药企业开发了一个 B2B 的电子商务系统。本系统主要是以该制药企业为购买方，发布企业所需要的货物清单，以本系统为平台，各个供应商进行竞标，由购买方选择购买供应商的货物并下订单发货。由于购买方发布货物需要对大量数据进行操作，因此制作了数据批处理程序，来实现大量数据的导入和导出。系统的在线部分运用了XML和XSL技术，体现了画面实现模版化的优势，使得更有效方便的实现画面重载。该系统的开发过程中，本人主要负责制造在线部分的登陆、Home、估价请求履历检索、取消订单一览、用户信息作成、通知信息作成6个模块以及数据批处理部分的供应商 Master 导入程序。
+
+  使用该系统，制药企业可以在众多供应商中选择最价廉物美的原材料，这样大大降低其成本，提高了企业利润。同时，供应商之间也有了相互竞争，可以促进生产，达到“双赢”的效果。
+  本文最后说明了对日软件开发过程与当今我国软件开发过程的区别，并对我国今后软件事业做了期望和展望。
 \end{abstract}
 
 \begin{abstractEN}
-  mole
+  This paper concerns with design and achievement of a software development project for Japanese company, experence the whole process of software development including system analysis, general design, detail design, coding, testing to develop a B2B E-business system for some Medicine Manufacture Enterprise. In this system, the Medicine Manufacture Enterprise as the buyers publish products list.The suppliers use this system as plat to bit products.Then the buyers select suppliers they need and send order to buy products.This system also has some batches to realize huge data importing and exporting.This system's webs use XML and XSL technologies to realize reloading of web templates. During the development of the system, my duty is to develop six webs and one batch.
+
+  Using this system, Medicine Manufacture Enterprise can select the best and the cheapest products in several suppliers to descreat cost. At the same time, suppliers will bit each other to inprove production and reach ‘Win-Win’.
+  
+  At the end of this paper, also explain the deference between Janpanese software development processing and Chinese, and give the deep expectance.
 \end{abstractEN}
 
-\chapter{一级标题}
+\mainmatter
 
-\section{二级标题}
+\chapter{绪论}
+
+\section{背景}
+
+\subsection{浅谈中国软件}
+
+众所周知，信息产业是……
+
+\subsection{项目背景}
+
+如今，随着互联网的日益流行\cite{OOSTRUM01}，……
+
+\subsection{关于Microsoft Commerce Server 2002}
+
+\subsubsection{简介}
+
+\subsubsection{技术特点}
+
+Microsoft Commerce Server 2002 拥有以下技术特点\footnote{技术特点是指…}。
+
+\paragraph{国际性站点支持}
+
+Microsoft Commerce Server 2002 对国际性站点\cite{Bayes63:classical}支持Microsoft Commerce Server 2002 对国际性站点支持Microsoft Commerce Server 2002 对国际性站点支持……
+
+\paragraph{更强大的B2B}
+
+与其余同类型技术相比，Microsoft Commerce Server 2002 对B2B的支持……
+
+
+\subsection{关于Commerce Brains}
+
+\subsubsection{项目介绍}
 
 这几天心里颇不宁静。今晚在院子里坐着乘凉，
 忽然想起日日走过的荷塘，在这满月的光里，
@@ -32,54 +163,9 @@
 妻在屋里拍着闰儿，迷迷糊糊地哼着眠歌。
 我悄悄地披了大衫，带上门出去。
 
-这几天心里颇不宁静。今晚在院子里坐着乘凉，
-忽然想起日日走过的荷塘，在这满月的光里，
-总该另有一番样子吧。月亮渐渐地升高了，
-墙外马路上孩子们的欢笑，已经听不见了\footnote{月亮渐渐地升高了}；
-妻在屋里拍着闰儿，迷迷糊糊地哼着眠歌。
-我悄悄地披了大衫，带上门出去。
+\chapter{真的假的}
 
-这几天心里颇不宁静。今晚在院子里坐着乘凉，
-忽然想起日日走过的荷塘，在这满月的光里，
-总该另有一番样子吧。月亮渐渐地升高了，
-墙外马路上孩子们的欢笑，已经听不见了；
-妻在屋里拍着闰儿，迷迷糊糊地哼着眠歌。
-我悄悄地披了大衫，带上门出去。
-
-这几天心里颇不宁静。今晚在院子里坐着乘凉，
-忽然想起日日走过的荷塘，在这满月的光里，
-总该另有一番样子吧。月亮渐渐地升高了，
-墙外马路上孩子们的欢笑，已经听不见了；
-妻在屋里拍着闰儿，迷迷糊糊地哼着眠歌。
-我悄悄地披了大衫，带上门出去。
-
-这几天心里颇不宁静。今晚在院子里坐着乘凉，
-忽然想起日日走过的荷塘，在这满月的光里，
-总该另有一番样子吧。月亮渐渐地升高了，
-墙外马路上孩子们的欢笑，已经听不见了；
-妻在屋里拍着闰儿，迷迷糊糊地哼着眠歌。
-我悄悄地披了大衫，带上门出去。
-
-这几天心里颇不宁静。今晚在院子里坐着乘凉，
-忽然想起日日走过的荷塘，在这满月的光里，
-总该另有一番样子吧。月亮渐渐地升高了，
-墙外马路上孩子们的欢笑，已经听不见了；
-妻在屋里拍着闰儿，迷迷糊糊地哼着眠歌。
-我悄悄地披了大衫，带上门出去。
-
-这几天心里颇不宁静。今晚在院子里坐着乘凉，
-忽然想起日日走过的荷塘，在这满月的光里，
-总该另有一番样子吧。月亮渐渐地升高了，
-墙外马路上孩子们的欢笑，已经听不见了；
-妻在屋里拍着闰儿，迷迷糊糊地哼着眠歌。
-我悄悄地披了大衫，带上门出去。
-
-这几天心里颇不宁静。今晚在院子里坐着乘凉，
-忽然想起日日走过的荷塘，在这满月的光里，
-总该另有一番样子吧。月亮渐渐地升高了，
-墙外马路上孩子们的欢笑，已经听不见了；
-妻在屋里拍着闰儿，迷迷糊糊地哼着眠歌。
-我悄悄地披了大衫，带上门出去。
+\section{背景}
 
 这几天心里颇不宁静。今晚在院子里坐着乘凉，
 忽然想起日日走过的荷塘，在这满月的光里，
@@ -139,14 +225,14 @@
 
 \chapter{一级标题}
 
-\chapter{一级标题一级标题一级标题一级标题一级标题一级标题一级标题一级标题一级标题一级标题一级标题一级标题一级标题一级标题一级标题一级标题一级标题一级标题一级标题一级标题}
+\chapter{一级标题一级标题一级标题一级标题一级标题一级标题一级标题一级标题一级标题}
 
 \section{二级标题}
 \section{二级标题}
 \subsection{呃呃}
 \section{二级标题}
 \section{二级标题}
-\section{二级标题二级标题二级标题二级标题二级标题二级标题二级标题二级标题二级标题二级标题二级标题二级标题二级标题二级标题二级标题二级标题二级标题二级标题二级标题二级标题二级标题二级标题二级标题二级标题二级标题二级标题}
+\section{二级标题}
 \section{二级标题}
 
 \chapter{一级标题}
@@ -158,18 +244,25 @@
 \chapter{一级标题}
 \chapter{一级标题}
 \chapter{一级标题}
+\section{二级标题}
+\section{二级标题}
+\section{二级标题}
 \chapter{一级标题}
 \chapter{一级标题}
 \chapter{一级标题}
 
 
-% \section{二级标题}
-% \chapter{一级标题}
+\section{二级标题}
+\chapter{一级标题}
+
+\backmatter
+
 
 \begin{appendix}
   真的假的，这里是附录。
 \end{appendix}
 
+\PrintReference
 
 \begin{acknowledgement}
   感恩感恩感恩感恩感恩感恩感恩感恩感恩感恩感恩感恩感恩
@@ -178,9 +271,5 @@
   感恩感恩感恩感恩感恩感恩感恩感恩感恩感恩感恩感恩感恩
   感恩感恩感恩感恩感恩感恩感恩感恩感恩感恩感恩感恩感恩
 \end{acknowledgement}
-
-看看我的字体大不大。
-
-{\normalsize 看看我的字体大不大。}
 
 \end{document}
