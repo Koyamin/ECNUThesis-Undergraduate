@@ -168,6 +168,14 @@
     footskip  = 6 mm,
     headsep   = \dimexpr(9.55mm-11.7pt)
   }
+\bool_if:NTF \g__ecnu_twoside_bool 
+  {
+    \geometry 
+      {
+        left      = 3.0 cm, 
+        right     = 2.5 cm,
+      } 
+  }
 \tl_new:N \g__ecnu_cjk_fontset_tl
 \tl_new:N \g__ecnu_fontset_tl
 \keys_define:nn { ecnu / style }
@@ -395,6 +403,7 @@
         \keys_set:nn { ctex }
           {
             chapter = {
+
               name          = {,、},
               number        = {\arabic{chapter}},
               numberformat  = \rmfamily,
