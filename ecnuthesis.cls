@@ -1,61 +1,133 @@
+%%
+%% This is file `ecnuthesis.cls',
+%% generated with the docstrip utility.
+%%
+%% The original source files were:
+%%
+%% ecnuthesis.dtx  (with options: `class')
+%% 
+%%     Copyright (C) 2021--2024 by Koyamin <koyafumin@gmail.com>
+%% 
+%%     This work may be distributed and/or modified under the
+%%     conditions of the LaTeX Project Public License, either
+%%     version 1.3c of this license or (at your option) any later
+%%     version. The latest version of this license is in:
+%% 
+%%       http://www.latex-project.org/lppl.txt
+%% 
+%%     nd version 1.3 or later is part of all distributions of
+%%     LaTeX version 2005/12/01 or later.
+%% 
 \NeedsTeXFormat{LaTeX2e}
 \RequirePackage{expl3}
-\GetIdInfo $Id: ecnuthesis.cls 0.2.1 2022-04-20 15:00:00Z Koyamin <koyafumin@gmail.com> Qucheng <i@qcmiao.cn> $
+\GetIdInfo $Id: ecnuthesis.dtx 0.2.1 2024-01-20 15:00:00Z Koyamin <koyafumin@gmail.com> Qucheng <i@qcmiao.cn> $
   {Undergraduate Thesis Template for East China Normal University}
 \ProvidesExplClass{\ExplFileName}
   {\ExplFileDate}{\ExplFileVersion}{\ExplFileDescription}
+%%
+
 \RequirePackage { xparse, xtemplate, l3keys2e }
-% 编译器只能选为 XeTeX
-\msg_new:nnn { ecnuthesis } { engine-unsupportd } 
+\msg_new:nnn { ecnuthesis } { engine-unsupportd }
   { \\
     This~ class~ requires~ XeTeX~ to~ compile. \\
-    The~ engine~ "#1"~ is~ not~ supported. 
+    The~ engine~ "#1"~ is~ not~ supported.
   }
 \sys_if_engine_xetex:F
   {
     \msg_fatal:nnx { ecnuthesis } { engine-unsupportd } { \c_sys_engine_str }
   }
+\box_new:N   \l__ecnu_tmpa_box
+\clist_new:N \l__ecnu_tmpa_clist
+\clist_new:N \l__ecnu_tmpb_clist
+\skip_new:N  \l__ecnu_tmpa_skip
+\tl_new:N    \l__ecnu_tmpa_tl
+\tl_new:N    \l__ecnu_tmpb_tl
+\dim_new:N   \l__ecnu_tmpa_dim
+\dim_new:N   \l__ecnu_tmpb_dim
+\bool_new:N \g__ecnu_twoside_bool
+\bool_set_false:N \g__ecnu_twoside_bool
+\bool_new:N \g__ecnu_decl_page_bool
+\bool_set_false:N \g__ecnu_decl_page_bool
+\clist_new:N \g__ecnu_to_ctexart_clist
+\cs_new:Npn \__ecnu_quad:  { \skip_horizontal:n { 1 em } }
+\cs_new:Npn \__ecnu_qquad: { \skip_horizontal:n { 2 em } }
+\cs_new_protected:Npn \__ecnu_vspace:N #1
+  {
+    \dim_set_eq:NN \l__ecnu_tmpa_dim \prevdepth
+    \hrule height \c_zero_dim
+    \nobreak
+    \skip_vertical:N #1
+    \skip_vertical:N \c_zero_skip
+    \dim_set_eq:NN \prevdepth \l__ecnu_tmpa_dim
+  }
+\cs_new_protected:Npn \__ecnu_vspace:n #1
+  {
+    \skip_set:Nn \l__ecnu_tmpa_skip {#1}
+    \__ecnu_vspace:N \l__ecnu_tmpa_skip
+  }
+\cs_generate_variant:Nn \__ecnu_vspace:N { c }
+\cs_new:Npn \__ecnu_symbol:n #1 { \tex_char:D #1 \scan_stop: }
+\cs_new:Npn \__ecnu_arabic:n #1
+  { \int_to_arabic:v { c@ #1 } }
+\cs_new_protected:Npn \__ecnu_gadd_ltxhook:nn #1#2
+  { \hook_gput_code:nnn {#1} { . } {#2} }
+\hook_gset_rule:nnnn { begindocument/before } { . } { < } { xeCJK }
+\cs_new_protected:Npn \__ecnu_patch_cmd:Nnn #1#2#3
+  {
+    \ctex_patch_cmd_once:NnnnTF #1 { } {#2} {#3}
+      { } { \ctex_patch_failure:N #1 }
+  }
+\cs_new_protected:Npn \__ecnu_preto_cmd:Nn #1#2
+  {
+    \ctex_preto_cmd:NnnTF #1 { } {#2}
+      { } { \ctex_patch_failure:N #1 }
+  }
+\cs_new_protected:Npn \__ecnu_appto_cmd:Nn #1#2
+  {
+    \ctex_appto_cmd:NnnTF #1 { } {#2}
+      { } { \ctex_patch_failure:N #1 }
+  }
 \cs_new:Npn \__ecnu_msg_new:nn  { \msg_new:nnn      { ecnuthesis } }
 \cs_new:Npn \__ecnu_error:n     { \msg_error:nn     { ecnuthesis } }
 \cs_new:Npn \__ecnu_error:nn    { \msg_error:nnn    { ecnuthesis } }
-
-% 设置选项
-\bool_new:N \g__ecnu_twoside_bool
-\bool_set_false:N \g__ecnu_twoside_bool
-\bool_new:N \g__ecnu_gen_declaration_page_bool
-\bool_set_false:N \g__ecnu_gen_declaration_page_bool
-\clist_new:N \g__ecnu_to_ctexart_clist
-\__ecnu_msg_new:nn { unknown-option }
-  { The~ class~ option~ "\l_keys_key_tl"~ is~ unknown. }
+\cs_new:Npn \__ecnu_error:nx    { \msg_error:nnx    { ecnuthesis } }
+\cs_new:Npn \__ecnu_error:nnn   { \msg_error:nnnn   { ecnuthesis } }
+\cs_new:Npn \__ecnu_error:nnnn  { \msg_error:nnnnn  { ecnuthesis } }
+\cs_new:Npn \__ecnu_warning:n   { \msg_warning:nn   { ecnuthesis } }
+\cs_new:Npn \__ecnu_warning:nn  { \msg_warning:nnn  { ecnuthesis } }
+\cs_new:Npn \__ecnu_warning:nxx { \msg_warning:nnxx { ecnuthesis } }
+\cs_new:Npn \__ecnu_info:nx     { \msg_info:nnx     { ecnuthesis } }
 \keys_define:nn { ecnu / option }
   {
     printMode   .choice:,
-    printMode / true  .code:n = 
+    printMode / true  .code:n =
       {
         \clist_gput_right:Nn \g__ecnu_to_ctexart_clist { twoside }
         \bool_set_true:N     \g__ecnu_twoside_bool
       },
-    printMode / false .code:n = 
+    printMode / false .code:n =
       {
         \clist_gput_right:Nn \g__ecnu_to_ctexart_clist { oneside }
         \bool_set_false:N    \g__ecnu_twoside_bool
       },
     printMode   .default:n = { true },
     printMode   .initial:n = { false },
-
-    declarePage   .value_forbidden:n = true,
-    declarePage   .code:n =
+    declarePage   .choice:,
+    declarePage / true  .code:n =
       {
-        \bool_set_true:N    \g__ecnu_gen_declaration_page_bool
+        \bool_set_true:N    \g__ecnu_decl_page_bool
       },
-    
-    unknown .code:n =
+    declarePage / false  .code:n =
       {
-        \__ecnu_error:n { unknown-option }
-      }
+        \bool_set_false:N    \g__ecnu_decl_page_bool
+      },
+    declarePage   .default:n = { true },
+    declarePage   .initial:n = { false },
+    unknown .code:n = { \__ecnu_error:n { unknown-option } }
   }
+\__ecnu_msg_new:nn { unknown-option }
+  { Class~ option~ "\l_keys_key_str"~ is~ unknown. }
 \ProcessKeysOptions { ecnu / option }
-% 导入 ctex 文档类
 \PassOptionsToClass
   {
     UTF8,
@@ -68,50 +140,33 @@
   { ctexrep }
 \clist_map_inline:nn
   {
-    { no-math           } { fontspec     },
-    { perpage           } { footmisc     },
-    { mathrm=sym        } { unicode-math },
+    { no-math           } { fontspec },
+    { perpage           } { footmisc },
   }
   { \PassOptionsToPackage #1 }
 \LoadClass { ctexrep }
-% 导入宏包
-\PassOptionsToPackage { titles } { tocloft }
-\PassOptionsToPackage { hidelinks, hypertexnames=false } { hyperref }
 \RequirePackage
   {
-    geometry,
-    fontspec,
     amsmath,
-    amssymb,
     unicode-math,
-    xcolor,
-    footmisc,
-    listings,
-    caption,
-    graphicx,
+    geometry,
     fancyhdr,
-    enumitem, 
-    amsthm,
-    thmtools,
-    xeCJKfntef,
-    tocloft,
-    hyperref,
+    footmisc,
+    graphicx,
+    caption,
     bicaption,
-    booktabs,
-    etoolbox,
+    xcolor,
+    xeCJKfntef
   }
-\captionsetup [ figure ] [ bi-second ] { name=Figure }
-\captionsetup [ table  ] [ bi-second ] { name=Table  }
-\captionsetup { justification=centering  }
 \geometry
   {
-    % showframe,
-    a4paper,
-    top       = 2.5 cm, 
-    bottom    = 2.0 cm, 
+    paper     = a4paper,
+    top       = 2.5 cm,
+    bottom    = 2.0 cm,
+    left      = 3.0 cm,
+    right     = 2.5 cm,
     footskip  = 6 mm,
-    headsep   = \dimexpr(9.55mm-\headheight),
-    headheight = 11.7pt
+    headsep   = \dimexpr(9.55mm-11.7pt)
   }
 \bool_if:NTF \g__ecnu_twoside_bool 
   {
@@ -121,121 +176,19 @@
         right     = 2.5 cm,
       } 
   }
-  {
-    \geometry 
-      {
-        left      = 3.0 cm, 
-        right     = 2.5 cm,
-      } 
-  }
-
-\cs_new_protected:Npn \__ecnu_appto_cmd:Nn #1#2
-  {
-    \ctex_appto_cmd:NnnTF #1 { } {#2}
-      { } { \ctex_patch_failure:N #1 }
-  }
-\cs_new:Npn \ecnu_allow_url_break:
-  {
-    \cs_new:Npn \__ecnu_add_url_break_points:
-      { \tl_map_function:NN \c__ecnu_url_break_points_tl \do }
-    \__ecnu_appto_cmd:Nn \UrlBreaks
-      { \UrlOrds \__ecnu_add_url_break_points: }
-  }
-\tl_const:Nn \c__ecnu_url_break_points_tl
-  {
-    abcdefghijklmnopqrstuvwxyz
-    ABCDEFGHIJKLMNOPQRSTUVWXYZ
-    0123456789
-  }
-\ctex_at_end_preamble:n {\ecnu_allow_url_break:}
-% 论文基本信息
-\clist_map_inline:nn 
-  { 
-    title, titleEN, author, studentID, department, major, supervisor
-    academicTitle
-  }
-  { \tl_new:c { l__ecnu_info_ #1 _tl } }
-\int_new:N   \l__ecnu_info_year_int
-\int_zero:N  \l__ecnu_info_year_int
-\int_new:N   \l__ecnu_enroll_year_int
-\int_new:N   \l__ecnu_info_graduation_year_int
-\int_zero:N  \l__ecnu_info_graduation_year_int
-\int_new:N   \l__ecnu_info_month_int
-\int_zero:N  \l__ecnu_info_month_int
-\clist_new:N \l__ecnu_info_keywords_clist
-\clist_new:N \l__ecnu_info_keywordsEN_clist
-\keys_define:nn { ecnu / info }
-  {
-    title           .tl_set:N     = \l__ecnu_info_title_tl,
-    titleEN         .tl_set:N     = \l__ecnu_info_titleEN_tl,
-    author          .tl_set:N     = \l__ecnu_info_author_tl,
-    studentID       .tl_set:N     = \l__ecnu_info_studentID_tl,
-    department      .tl_set:N     = \l__ecnu_info_department_tl,
-    major           .tl_set:N     = \l__ecnu_info_major_tl,
-    supervisor      .tl_set:N     = \l__ecnu_info_supervisor_tl,
-    academicTitle   .tl_set:N     = \l__ecnu_info_academicTitle_tl,
-    year            .int_set:N    = \l__ecnu_info_year_int,
-    month           .int_set:N    = \l__ecnu_info_month_int,
-    graduationYear  .int_set:N    = \l__ecnu_info_graduation_year_int,
-    keywords        .clist_set:N  = \l__ecnu_info_keywords_clist,
-    keywordsEN      .clist_set:N  = \l__ecnu_info_keywordsEN_clist
-  }
-\NewDocumentCommand \theyear { } 
-  {
-    \int_compare:nNnTF { \l__ecnu_info_year_int } = { \c_zero_int } 
-      { \int_set_eq:NN \l__ecnu_info_year_int \c_sys_year_int } 
-      { }
-    \int_use:N \l__ecnu_info_year_int
-  }
-\NewDocumentCommand \themonth { } 
-  {
-    \int_compare:nNnTF { \l__ecnu_info_month_int } = { \c_zero_int } 
-      { \int_set_eq:NN \l__ecnu_info_month_int \c_sys_month_int }
-      { }
-    \int_use:N \l__ecnu_info_month_int
-  }
-\NewDocumentCommand \graduationYear { } 
-  {
-    \int_compare:nNnTF { \l__ecnu_info_graduation_year_int } = { \c_zero_int } 
-      {
-        \int_compare:nNnTF { \l__ecnu_info_year_int } = { \c_zero_int } 
-          {
-            \int_set_eq:NN  \l__ecnu_info_graduation_year_int 
-                            \c_sys_year_int
-          } 
-          {
-            \int_set_eq:NN  \l__ecnu_info_graduation_year_int 
-                            \l__ecnu_info_year_int
-          }
-      }
-      { }
-    \int_use:N  \l__ecnu_info_graduation_year_int
-  }
-\pagestyle{fancy}
-  \fancyhead[L,R]       { }
-  \fancyhead[C]         { \sffamily\footnotesize \l__ecnu_info_title_tl }
-  \fancyfoot[C]         { \footnotesize \thepage }
-  \fancyfoot[L,R]       { }
-  % \headheight = 11.7 pt
-\fancypagestyle{plain} 
-  {
-    \fancyhead[L,R]     { }
-    \fancyhead[C]       { \sffamily\footnotesize \l__ecnu_info_title_tl }
-    \fancyfoot[C]       { \footnotesize \thepage }
-    \fancyfoot[L,R]     { }
-    % \headheight = 11.7 pt
-  }
-% 字体设置
 \tl_new:N \g__ecnu_cjk_fontset_tl
-\tl_new:N \g__ecnu_math_fontset_tl
+\tl_new:N \g__ecnu_fontset_tl
+\keys_define:nn { ecnu / style }
+  {
+    font .choices:nn =
+      { lm, times, xits }
+      { \tl_set_eq:NN \g__ecnu_fontset_tl \l_keys_choice_tl }
+  }
 \keys_define:nn { ecnu / style }
   {
     fontCJK .choices:nn =
       { fandol, mac, windows }
-      { \tl_set_eq:NN \g__ecnu_cjk_fontset_tl \l_keys_choice_tl },
-    fontMath .choices:nn =
-      { lm, times }
-      { \tl_set_eq:NN \g__ecnu_math_fontset_tl \l_keys_choice_tl }
+      { \tl_set_eq:NN \g__ecnu_cjk_fontset_tl \l_keys_choice_tl }
   }
 \cs_new_protected:Npn \__ecnu_setmainfont:nn #1#2
   { \__fontspec_main_setmainfont:nn {#2} {#1} }
@@ -245,18 +198,21 @@
   { \__fontspec_main_setmonofont:nn {#2} {#1} }
 \cs_new_protected:Npn \__ecnu_setmathfont:nn #1#2
   { \__um_setmathfont:nn {#2} {#1} }
+\cs_new_eq:NN \__ecnu_set_family:nnn  \xeCJK_set_family:nnn
+\cs_new_eq:NN \__ecnu_switch_family:n \xeCJK_switch_family:n
+\cs_generate_variant:Nn \__ecnu_set_family:nnn { x }
 \cs_new_protected:Npn \__ecnu_setCJKmainfont:nn #1#2
-  { \setCJKmainfont {#1} [#2] }
+  { \__ecnu_set_family:xnn { \CJKrmdefault } {#2} {#1} }
 \cs_new_protected:Npn \__ecnu_setCJKsansfont:nn #1#2
-  { \setCJKsansfont {#1} [#2] }
+  { \__ecnu_set_family:xnn { \CJKsfdefault } {#2} {#1} }
 \cs_new_protected:Npn \__ecnu_setCJKmonofont:nn #1#2
-  { \setCJKmonofont {#1} [#2] }
+  { \__ecnu_set_family:xnn { \CJKttdefault } {#2} {#1} }
 \cs_new_protected:Npn \__ecnu_set_cjk_font_kai:nn #1#2
   { \__ecnu_set_family:nnn { ecnu@kai } {#2} {#1} }
 \cs_new_protected:Npn \ecnu@kai
   { \__ecnu_switch_family:n { ecnu@kai } }
 \tl_const:Nn \__ecnu_cjk_font_options:
-  { UprightFont = *, ItalicFont = *, AutoFakeBold = true }
+ { UprightFont = *, ItalicFont = *, AutoFakeBold = true }
 \cs_new_protected:Npx \__ecnu_setCJKmainfont:n   #1
   { \__ecnu_setCJKmainfont:nn   {#1} { \__ecnu_cjk_font_options: } }
 \cs_new_protected:Npx \__ecnu_setCJKsansfont:n   #1
@@ -265,86 +221,58 @@
   { \__ecnu_setCJKmonofont:nn   {#1} { \__ecnu_cjk_font_options: } }
 \cs_new_protected:Npx \__ecnu_set_cjk_font_kai:n #1
   { \__ecnu_set_cjk_font_kai:nn {#1} { \__ecnu_cjk_font_options: } }
-\cs_new_eq:NN \__ecnu_set_family:nnn  \xeCJK_set_family:nnn
-\cs_new_eq:NN \__ecnu_switch_family:n \xeCJK_switch_family:n
-\tl_new:N \g__ecnu_font_family_xits_tl
-\tl_new:N \g__ecnu_font_style_xits_rm_tl
-\tl_new:N \g__ecnu_font_style_xits_bf_tl
-\tl_new:N \g__ecnu_font_style_xits_it_tl
-\tl_new:N \g__ecnu_font_style_xits_bfit_tl
-\tl_new:N \g__ecnu_font_name_xits_tl
-\tl_new:N \g__ecnu_font_name_xits_math_rm_tl
-\tl_new:N \g__ecnu_font_name_xits_math_bf_tl
-\fontspec_font_if_exist:nTF { XITS-Regular.otf }
+\cs_new_protected:Npn \__ecnu_set_font_helper:n #1
   {
-    \tl_set:Nn \g__ecnu_font_family_xits_tl        { XITS             }
-    \tl_set:Nn \g__ecnu_font_style_xits_rm_tl      { Regular          }
-    \tl_set:Nn \g__ecnu_font_style_xits_bf_tl      { Bold             }
-    \tl_set:Nn \g__ecnu_font_style_xits_it_tl      { Italic           }
-    \tl_set:Nn \g__ecnu_font_style_xits_bfit_tl    { BoldItalic       }
-    \tl_set:Nn \g__ecnu_font_name_xits_math_rm_tl  { XITSMath-Regular }
-    \tl_set:Nn \g__ecnu_font_name_xits_math_bf_tl  { XITSMath-Bold    }
-  }
-  {
-    \tl_set:Nn \g__ecnu_font_family_xits_tl        { xits          }
-    \tl_set:Nn \g__ecnu_font_style_xits_rm_tl      { regular       }
-    \tl_set:Nn \g__ecnu_font_style_xits_bf_tl      { bold          }
-    \tl_set:Nn \g__ecnu_font_style_xits_it_tl      { italic        }
-    \tl_set:Nn \g__ecnu_font_style_xits_bfit_tl    { bolditalic    }
-    \tl_set:Nn \g__ecnu_font_name_xits_math_rm_tl  { xits-math     }
-    \tl_set:Nn \g__ecnu_font_name_xits_math_bf_tl  { xits-mathbold }
-  }
-\tl_set:Nx \g__ecnu_font_name_xits_tl
-  { \g__ecnu_font_family_xits_tl - \g__ecnu_font_style_xits_rm_tl }
-\fontspec_font_if_exist:nTF { Times~ New~ Roman } 
-  {
-    \cs_new_protected:Npn \__ecnu_load_fontEN:
+    \exp_args:Nc \RenewDocumentCommand { set #1 font } { O { } m O { } }
       {
-        \__ecnu_setmainfont:nn { Times~ New~ Roman    } { }
-        \__ecnu_setsansfont:nn { Arial                } { }
-        \__ecnu_setmonofont:nn { Courier~ New         } { }
-        \__ecnu_setmathfont:nn { \g__ecnu_font_name_xits_math_rm_tl .otf }
-        { BoldFont = \g__ecnu_font_name_xits_math_bf_tl .otf }
+        \ctex_at_end_preamble:n
+          { \use:c { __ecnu_set #1 font:nn } {##2} { ##1, ##3 } }
       }
   }
-  { 
-    \cs_new_protected:Npn \__ecnu_load_fontEN:
-      {
-        \__ecnu_setmainfont:nn { \g__ecnu_font_family_xits_tl }
-          {
-            Extension      = .otf,
-            UprightFont    = *-\g__ecnu_font_style_xits_rm_tl,
-            BoldFont       = *-\g__ecnu_font_style_xits_bf_tl,
-            ItalicFont     = *-\g__ecnu_font_style_xits_it_tl,
-            BoldItalicFont = *-\g__ecnu_font_style_xits_bfit_tl
-          }
-        \__ecnu_setsansfont:nn { texgyreheros }
-          {
-            Extension      = .otf,
-            UprightFont    = *-regular,
-            BoldFont       = *-bold,
-            ItalicFont     = *-italic,
-            BoldItalicFont = *-bolditalic
-          }
-        \__ecnu_setmonofont:nn { texgyrecursor }
-          {
-            Extension      = .otf,
-            UprightFont    = *-regular,
-            BoldFont       = *-bold,
-            ItalicFont     = *-italic,
-            BoldItalicFont = *-bolditalic,
-            Ligatures      = CommonOff
-          }
-        
-      }
+\clist_map_inline:nn { main, sans, mono, math }
+  { \__ecnu_set_font_helper:n {#1} }
+\clist_map_inline:nn { CJKmain, CJKsans, CJKmono }
+  { \__ecnu_set_font_helper:n {#1} }
+\cs_new_protected:Npn \__ecnu_load_font_times:
+  {
+    \__ecnu_setmainfont:nn { Times~ New~ Roman    } { }
+    \__ecnu_setsansfont:nn { Arial                } { }
+    \__ecnu_setmonofont:nn { Courier~ New         } { }
+    \__ecnu_setmathfont:nn { XITSMath-Regular.otf }
+      { BoldFont = XITSMath-Bold.otf }
   }
-\cs_new_protected:Npn \__ecnu_load_math_font_lm:
+\cs_new_protected:Npn \__ecnu_load_font_xits:
+  {
+    \__ecnu_setmainfont:nn { XITS }
+      {
+        Extension      = .otf,
+        UprightFont    = *-Regular,
+        BoldFont       = *-Bold,
+        ItalicFont     = *-Italic,
+        BoldItalicFont = *-BoldItalic,
+      }
+    \__ecnu_setsansfont:nn { texgyreheros }
+      {
+        Extension      = .otf,
+        UprightFont    = *-regular,
+        BoldFont       = *-bold,
+        ItalicFont     = *-italic,
+        BoldItalicFont = *-bolditalic
+      }
+    \__ecnu_setmonofont:nn { texgyrecursor }
+      {
+        Extension      = .otf,
+        UprightFont    = *-regular,
+        BoldFont       = *-bold,
+        ItalicFont     = *-italic,
+        BoldItalicFont = *-bolditalic,
+        Ligatures      = CommonOff
+      }
+    \__ecnu_setmathfont:nn { XITSMath-Regular.otf }
+      { BoldFont = XITSMath-Bold.otf }
+  }
+\cs_new_protected:Npn \__ecnu_load_font_lm:
   { \__ecnu_setmathfont:nn { latinmodern-math.otf } { } }
-\cs_new_protected:Npn \__ecnu_load_math_font_times:
-  {
-    \__ecnu_setmathfont:nn { \g__ecnu_font_name_xits_math_rm_tl .otf }
-      { BoldFont = \g__ecnu_font_name_xits_math_bf_tl .otf }
-  }
 \cs_new_protected:Npn \__ecnu_load_cjk_font_fandol:
   {
     \__ecnu_setCJKmainfont:nn   { FandolSong }
@@ -404,9 +332,6 @@
         ItalicFont     = *-Regular,
         BoldItalicFont = *-Bold
       }
-    \__xeCJK_preamble_family:n { \CJKrmdefault }
-    \__xeCJK_preamble_family:n { \CJKsfdefault }
-    \__xeCJK_preamble_family:n { \CJKttdefault }
   }
 \cs_new_protected:Npn \__ecnu_load_cjk_font_windows:
   {
@@ -415,378 +340,323 @@
     \__ecnu_setCJKmonofont:n   { FangSong }
     \__ecnu_set_cjk_font_kai:n { KaiTi    }
   }
-\cs_new_protected:Npn \__ecnu_load_font: 
-  { 
-    \__ecnu_load_fontEN: 
-    \use:c { __ecnu_load_math_font_ \g__ecnu_math_fontset_tl : }
+\cs_new_protected:Npn \__ecnu_load_font:
+  {
+    \use:c { __ecnu_load_font_ \g__ecnu_fontset_tl :         }
     \use:c { __ecnu_load_cjk_font_ \g__ecnu_cjk_fontset_tl : }
   }
 \ctex_at_end_preamble:n { \__ecnu_load_font: }
-
-% 脚注编号样式
-\tl_const:Nn \c__ecnu_fn_style_plain_tl    { plain   }
-\tl_const:Nn \c__ecnu_fn_style_circled_tl  { circled }
-\tl_new:N \l__ecnu_fn_style_tl
-\keys_define:nn { ecnu / style }
+\keys_set:nn { unicode-math }
   {
-    footnote   .choices:nn =
-      {plain, circled}
-      {
-        \tl_gset_eq:NN \l__ecnu_fn_style_tl \l_keys_choice_tl
-      },
-    footnote .value_required:n = true
+    math-style = ISO,
+    bold-style = ISO,
   }
-\cs_new:Npn \__ecnu_symbol:n #1 { \tex_char:D #1 \scan_stop: }
-\cs_new:Npn \__ecnu_fn_symbol_xits:n #1
+\DeclareEmphSequence
   {
-    \int_compare:nTF { #1 >= 10 }
-      {
-        \int_compare:nTF { #1 >= 36 }
-          { \__ecnu_symbol:n { \int_eval:n { "24B6 - 36 + #1 } } }
-          { \__ecnu_symbol:n { \int_eval:n { "24D0 - 10 + #1 } } }
-      }
-      { \__ecnu_symbol:n { \int_eval:n { "2460 - 1 + #1 } } }
+    \itshape \ecnu@kai,
+    \upshape \CJKfamily { \CJKfamilydefault },
   }
-\cs_set:Npn \thefootnote { \ecnu_footnote_number:N \c@footnote }
-\cs_new:Npn \ecnu_footnote_number:N #1
-  {
-    \tl_case:NnF \l__ecnu_fn_style_tl 
-      {
-        \c__ecnu_fn_style_plain_tl
-          { \int_use:N #1 }
-          \c__ecnu_fn_style_circled_tl
-          { 
-            \fontspec { \g__ecnu_font_name_xits_tl .otf }
-            \__ecnu_fn_symbol_xits:n {#1}
-          }
-      }
-      { \int_use:N #1 }
-  }
-
-\cs_set:Npn \@makefntext #1
-  {
-    % \mode_leave_vertical:
-    % \hbox_to_wd:nn { 1.5 em } { \@thefnmark \hfil }
-    $^\text{\@thefnmark}$
-    #1
-  }
-
-% 代码块设置
-\definecolor { colorKeyword     } { RGB } {  86,156,214 }
-\definecolor { colorString      } { RGB } { 214,157,133 }
-\definecolor { colorComment     } { RGB } {  87,166, 74 }
-\definecolor { colorNumber      } { RGB } { 128,128,128 }
-\definecolor { colorEmph        } { RGB } {  78,201,176 }
-\definecolor { colorBackground  } { RGB } { 242,242,242 }
-\definecolor { colorRule        } { RGB } { 177,  0, 52 }
-\lstdefinestyle{style@base}
-{
-    basewidth         = 0.6 em,
-    lineskip          = 2 pt,
-    frame             = l,
-    framerule         = 2 pt,
-    framesep          = 5 pt,
-    xleftmargin       = 7 pt,
-    basicstyle        = \small\ttfamily,
-    rulecolor         = \color{colorRule},
-    backgroundcolor   = \color{colorBackground},
-    breaklines        = true,
-    showspaces        = false,
-    showstringspaces  = false,
-}
-\lstset
-  {
-    style = style@base,
-  }
-\RenewDocumentCommand \lstlistingname { } {源代码}
-
-% 图表名称格式
-\captionsetup
-  {
-    font     = small,
-    labelsep = quad
-  }
-
-% 章节标号
 \setcounter{secnumdepth}{5}
-\__ecnu_msg_new:nn { unknown-value }
-  { The~ value~ "\l_keys_value_tl"~ is~ unknown. }
-\keys_define:nn { ecnu / style }
-  {
-    numbering   .choice:,
-    numbering / arabic  .code:n = 
-      {
-        \keys_set:nn { ctex }
-          {
-            chapter = {
-              name    = {,、},
-              number  = \arabic{chapter},
-              format        = ,
-              titleformat   = \sffamily\zihao{-4},
-              numberformat  = \zihao{-4},
-              aftername  = \ ,
-              tocline = {\CTEXifname{\protect\numberline{\CTEXthechapter}}{}##2},
-            },
-            section = {
-              name = {,},
-              number  = {\arabic{chapter}.\arabic{section}},
-              format        = ,
-              titleformat   = \sffamily\zihao{-4},
-              numberformat  = \zihao{-4},
-            },
-            subsection = {
-              name    = {,},
-              number  = 
-                {\arabic{chapter}.\arabic{section}.\arabic{subsection}},
-              format        = ,
-              titleformat   = \sffamily\zihao{-4},
-              numberformat  = \zihao{-4},
-            }, 
-            subsubsection = {
-              name    = {,},
-              number  = 
-                {
-                  \arabic{chapter}.\arabic{section}.
-                  \arabic{subsection}.\arabic{subsubsection}
-                },
-              format        = ,
-              titleformat   = \sffamily\zihao{-4},
-              numberformat  = \zihao{-4},
-            }, 
-            paragraph = {
-              name    = {,)},
-              number  = \arabic{paragraph},
-              format        = ,
-              titleformat   = \sffamily\zihao{-4},
-              numberformat  = \zihao{-4},
-            },
-          }
-      },
-    numbering / chinese .code:n = 
-      {
-        \keys_set:nn { ctex }
-          {
-            chapter = {
-              name    = {,、},
-              number  = \chinese{chapter},
-              format  = \sffamily\zihao{-4},
-              aftername  = \ ,
-              tocline = {\CTEXifname{\protect\numberline{\CTEXthechapter}}{}##2},
-            },
-            section = {
-              name    = {（,）},
-              number  = \chinese{section},
-              format  = \sffamily\zihao{-4},
-              aftername  = \ ,
-            }, 
-            subsection = {
-              name    = {,.},
-              number  = \arabic{subsection},
-              format        = ,
-              titleformat   = \sffamily\zihao{-4},
-              numberformat  = \zihao{-4},
-            }, 
-            subsubsection = {
-              name    = {(,)},
-              number  = \arabic{subsubsection},
-              format        = ,
-              titleformat   = \sffamily\zihao{-4},
-              numberformat  = \zihao{-4},
-            }, 
-            paragraph = {
-              name    = {,)},
-              number  = \arabic{paragraph},
-              format        = ,
-              titleformat   = \sffamily\zihao{-4},
-              numberformat  = \zihao{-4},
-            },
-          }
-      },
-    numbering / alpha   .code:n = 
-      {
-        \keys_set:nn { ctex }
-          {
-            chapter = {
-              name = {,.},
-              number  = \Alph{chapter},
-              format        = ,
-              titleformat   = \sffamily\zihao{-4},
-              numberformat  = \zihao{-4},
-              aftername  = \quad,
-            },
-            section = {
-              name = {(,)},
-              number  = \Alph{section},
-              format        = ,
-              titleformat   = \sffamily\zihao{-4},
-              numberformat  = \zihao{-4},
-            },
-            subsection = {
-              name    = {,.},
-              number  = \alph{subsection},
-              format        = ,
-              titleformat   = \sffamily\zihao{-4},
-              numberformat  = \zihao{-4},
-            }, 
-            subsubsection = {
-              name    = {(,)},
-              number  = \alph{subsubsection},
-              format        = ,
-              titleformat   = \sffamily\zihao{-4},
-              numberformat  = \zihao{-4},
-            }, 
-            paragraph = {
-              name    = {,)},
-              number  = \alph{paragraph},
-              format        = ,
-              titleformat   = \sffamily\zihao{-4},
-              numberformat  = \zihao{-4},
-            },
-          }
-      },
-    numbering / unknown   .code:n = { \__ecnu_error:n { unknown-value } }
-  }
 \keys_set:nn { ctex }
   {
-    chapter = { 
-      beforeskip    = 0ex,
+    chapter = {
+      format        = \sffamily\normalsize,
+      pagestyle     = fancy,
+      beforeskip    = 1ex,
       afterskip     = 2.5ex plus .2ex,
       fixskip       = true,
+      tocline       = {\CTEXifname{\protect\numberline{\CTEXthechapter}}{}#2}
     },
-    section = { 
+    section = {
+      format        = \sffamily\normalsize,
       beforeskip    = 2.5ex plus 1ex minus .2ex,
       afterskip     = 2.5ex plus .2ex,
       fixskip       = true,
     },
-    subsection = { 
+    subsection = {
+      format        = \sffamily\normalsize,
       beforeskip    = 2.5ex plus 1ex minus .2ex,
       afterskip     = 2.5ex plus .2ex,
       indent        = 1 em,
       fixskip       = true,
     },
-    subsubsection   = { 
+    subsubsection   = {
+      format        = \sffamily\normalsize,
       beforeskip    = 2.5ex plus 1ex minus .2ex,
       afterskip     = 2.5ex plus .2ex,
       indent        = 2 em,
       fixskip       = true,
     },
     paragraph = {
-      beforeskip    = 2ex plus 1ex minus .2ex,
-      afterskip     = 1em,
-      indent        = 3 em,
+      format        = \sffamily\normalsize,
+      beforeskip    = 2.5ex plus 1ex minus .2ex,
+      afterskip     = 2.5ex plus .2ex,
+      runin         = false,
       fixskip       = true,
     },
   }
-
-% 图片标号
-\cs_set:Npn \thefigure
-  { \int_to_arabic:n { \c@chapter } - \int_to_arabic:n { \c@figure } }
-\cs_set:Npn \thetable
-  { \int_to_arabic:n { \c@chapter } - \int_to_arabic:n { \c@table  } }
-% 定理环境
-\declaretheoremstyle
-  [
-    spaceabove=6pt, spacebelow=6pt,
-    headfont      = \sffamily,
-    headpunct     = ,
-    notefont      = \mdseries, 
-    notebraces    = {(}{)},
-    bodyfont      = \normalfont,
-    postheadspace = 1em,
-  ]
-  {mainstyle}
-\declaretheoremstyle
-  [
-    spaceabove=6pt, spacebelow=6pt,
-    headfont      = \sffamily,
-    headpunct     = ,
-    notefont      = \mdseries, 
-    notebraces    = {(}{)},
-    bodyfont      = \normalfont,
-    postheadspace = 1em,
-    qed           = \qedsymbol
-  ]
-  {proofstyle}
-\declaretheorem[name=定理,style=mainstyle,numberwithin=chapter] { theorem    }
-\declaretheorem[name=引理,style=mainstyle,numberwithin=chapter] { lemma      }
-\declaretheorem[name=推论,style=mainstyle,numberwithin=chapter] { corollary  }
-\declaretheorem[name=定义,style=mainstyle,numberwithin=chapter] { definition }
-\declaretheorem[name=例,style=mainstyle,numberwithin=chapter]   { example    }
-\declaretheorem[name=问题,style=mainstyle,numberwithin=chapter] { problem    }
-\declaretheorem[name=公理,style=mainstyle,numberwithin=chapter] { axiom      }
-\declaretheorem[name=证明,style=proofstyle,numbered=no]         { Proof      }
-\RenewDocumentEnvironment {proof} { } { \begin{Proof} } { \end{Proof} }
-
-% 参考文献
-\tl_new:N \l__ecnu_bib_resource_tl
 \keys_define:nn { ecnu / style }
   {
-    bibResource .tl_set:N = \l__ecnu_bib_resource_tl
-  }
-\PassOptionsToPackage 
-  {
-    backend   = biber,
-    style     = gb7714-2015,
-    seconds   = true,
-    hyperref  = true,
-    gbpub     = false,
-    gbpunctin = false,
-  } 
-  { biblatex }
-\RequirePackage { biblatex }
-\renewcommand*{\bibfont}{\zihao{5}}
-\cs_new_protected:Npn \__ecnu_biblatex_setup:
-  {
-    \exp_args:NV \addbibresource \l__ecnu_bib_resource_tl
-    \__ecnu_biblatex_allow_url_break:
-    \setlength{\bibitemsep}{0pt}
-    \defbibheading { bibliography } [ \bibname ] 
-    { 
-      \phantomsection
-      \addcontentsline{toc}{chapter}{参考文献}
-      \__ecnu_title:n {##1} 
-      \mode_leave_vertical: \par \noindent
-    }
-  }
-\cs_new:Npn \__ecnu_biblatex_allow_url_break:
-  {
-    \int_set_eq:NN \c@biburlucpenalty  \c_one_int
-    \int_set_eq:NN \c@biburlnumpenalty \c_one_int
-    \int_set_eq:NN \c@biburllcpenalty  \c_one_int
-  }
-\ctex_at_end_preamble:n { \__ecnu_biblatex_setup: }
-\NewDocumentCommand \PrintReference {} 
-  {
-    \cleardoublepage
-    \printbibliography
-    \clearpage{\thispagestyle{empty}\cleardoublepage}
-  }
+    numbering .choice:,
+    numbering / arabic  .code:n =
+      {
+        \keys_set:nn { ctex }
+          {
+            chapter = {
 
-% 制作封面
-%% 定义内部函数
-\cs_new_protected:Npn \__ecnu_vspace:N #1
-  {
-    \dim_set_eq:NN \l__ecnu_tmpa_dim \prevdepth
-    \hrule height \c_zero_dim
-    \nobreak
-    \skip_vertical:N #1
-    \skip_vertical:N \c_zero_skip
-    \dim_set_eq:NN \prevdepth \l__ecnu_tmpa_dim
+              name          = {,、},
+              number        = {\arabic{chapter}},
+              numberformat  = \rmfamily,
+              aftername     = ,
+            },
+            section = {
+              name          = {,},
+              number        = {\arabic{chapter}.\arabic{section}},
+              numberformat  = \rmfamily,
+            },
+            subsection = {
+              name          = {,},
+              number        =
+                {\arabic{chapter}.\arabic{section}.\arabic{subsection}},
+              numberformat  = \rmfamily,
+            },
+            subsubsection = {
+              name          = {,},
+              number        =
+                {
+                  \arabic{chapter}.\arabic{section}.
+                  \arabic{subsection}.\arabic{subsubsection}
+                },
+              numberformat  = \rmfamily,
+              indent        = 2 em,
+            },
+            paragraph = {
+              name          = {,）},
+              number        = {\arabic{paragraph}},
+              numberformat  = \rmfamily,
+              aftername     = ,
+              indent        = 3 em,
+            }
+          }
+      },
+    numbering / chinese .code:n =
+      {
+        \keys_set:nn { ctex }
+          {
+            chapter = {
+              name          = {,、},
+              number        = {\chinese{chapter}},
+              numberformat  = \sffamily,
+            },
+            section = {
+              name          = {（,）},
+              number        = {\chinese{section}},
+              numberformat  = \sffamily,
+              aftername     = ,
+            },
+            subsection = {
+              name          = {,.},
+              number        = {\arabic{subsection}},
+              indent        = 2 em,
+
+            },
+            subsubsection = {
+              name          = {（,）},
+              number        = {\arabic{subsubsection}},
+              aftername     = {\ },
+              indent        = 2 em,
+            },
+            paragraph = {
+              name          = {,）},
+              number        = \arabic{paragraph},
+              aftername     = ,
+              indent        = 4 em,
+            }
+          }
+      },
+    numbering / alpha   .code:n =
+      {
+        \keys_set:nn { ctex }
+          {
+            chapter = {
+              name          = {,.},
+              number        = \Alph{chapter},
+            },
+            section = {
+              name          = {(,)},
+              number        = \Alph{section},
+              aftername     = {\ },
+            },
+            subsection = {
+              name          = {,.},
+              number        = \alph{subsection},
+              aftername     = {\ },
+              numberformat  = \rmfamily,
+            },
+            subsubsection = {
+              name          = {(,)},
+              number        = \alph{subsubsection},
+              aftername     = {\ },
+              numberformat  = \rmfamily,
+            },
+            paragraph = {
+              name          = {,)},
+              number        = \alph{paragraph},
+              aftername     = {\ },
+              numberformat  = \rmfamily,
+            },
+          }
+      },
+    numbering / unknown   .code:n = { \__ecnu_error:n { unknown-value } }
   }
-\cs_new_protected:Npn \__ecnu_vspace:n #1
+\__ecnu_msg_new:nn { unknown-value }
+  { The~ value~ "\l_keys_value_tl"~ is~ unknown. }
+\cs_new_protected:Npn \__ecnu_title:n #1
   {
-    \skip_set:Nn \l__ecnu_tmpa_skip {#1}
-    \__ecnu_vspace:N \l__ecnu_tmpa_skip
+    \group_begin:
+      \ctexset
+        {
+          chapter / numbering = false,
+          chapter / format    = \sffamily\bfseries\centering,
+          chapter / titleformat = \large,
+          chapter / afterskip = 3.5ex plus 0.5ex,
+        }
+      \chapter {#1}
+    \group_end:
   }
-\cs_generate_variant:Nn \__ecnu_vspace:N { c }
-\box_new:N   \l__ecnu_tmpa_box
-\clist_new:N \l__ecnu_tmpa_clist
-\clist_new:N \l__ecnu_tmpb_clist
-\skip_new:N  \l__ecnu_tmpa_skip
-\tl_new:N    \l__ecnu_tmpa_tl
-\tl_new:N    \l__ecnu_tmpb_tl
-\dim_new:N   \l__ecnu_tmpa_dim
-\dim_new:N   \l__ecnu_tmpb_dim
+\cs_generate_variant:Nn \__ecnu_title:n { V }
+\cs_new_protected:Npn \__ecnu_abs_title:n #1
+  {
+    \group_begin:
+      \ctexset
+        {
+          chapter / numbering   = false,
+          chapter / format      = \sffamily\bfseries\centering,
+          chapter / titleformat = \large,
+          chapter / beforeskip  = 2.25 bp,
+          chapter / afterskip   = 2.25 bp,
+        }
+      \chapter* {#1}
+    \group_end:
+  }
+\cs_generate_variant:Nn \__ecnu_abs_title:n { V }
+\cs_new_protected:Npn \__ecnu_absEN_title:n #1
+  {
+    \group_begin:
+      \ctexset
+        {
+          chapter / numbering   = false,
+          chapter / format      = \rmfamily\bfseries\centering,
+          chapter / titleformat = \large,
+          chapter / beforeskip  = 2.25 bp,
+          chapter / afterskip   = 2.25 bp,
+        }
+      \chapter* {#1}
+    \group_end:
+  }
+\cs_generate_variant:Nn \__ecnu_absEN_title:n { V }
+\cs_new_protected:Npn \__ecnu_toc_title:n #1
+  {
+    \group_begin:
+      \ctexset
+        {
+          chapter / numbering   = false,
+          chapter / pagestyle   = empty,
+          chapter / format      = \rmfamily\bfseries\centering,
+          chapter / titleformat = \normalsize,
+        }
+      \chapter* {#1}
+    \group_end:
+  }
+\cs_generate_variant:Nn \__ecnu_toc_title:n { V }
+\fancyhf { }
+\fancyhead[C]   { \footnotesize \l__ecnu_info_title_tl }
+\fancyfoot[C]   { \footnotesize \thepage }
+\RenewDocumentCommand \cleardoublepage { }
+  {
+    \clearpage
+    \bool_if:NT \g__ecnu_twoside_bool
+      {
+        \int_if_odd:nF \c@page
+          { \hbox:n { } \thispagestyle { empty } \newpage }
+      }
+  }
+\pagestyle { fancy }
+\cs_set:Npn \@makefntext #1
+  {
+    \mode_leave_vertical:
+    \textsuperscript{\@thefnmark} #1
+  }
+\captionsetup
+  {
+    font          = small,
+    labelsep      = quad,
+    justification = centering
+  }
+\captionsetup [ figure ] [ bi-second ] { name=Figure }
+\captionsetup [ table  ] [ bi-second ] { name=Table  }
+\cs_set:Npn \thefigure
+  {  \thechapter - \int_to_arabic:n { \c@figure } }
+\cs_set:Npn \thetable
+  {  \thechapter - \int_to_arabic:n { \c@table  } }
+\clist_map_inline:nn
+  {
+    title, titleEN, author, studentID, department, major, supervisor
+    academicTitle
+  }
+  { \tl_new:c { l__ecnu_info_ #1 _tl } }
+\clist_new:N \l__ecnu_info_keywords_clist
+\clist_new:N \l__ecnu_info_keywordsEN_clist
+\int_new:N   \l__ecnu_info_year_int
+\int_new:N   \l__ecnu_info_month_int
+\int_new:N   \l__ecnu_info_graduation_year_int
+\keys_define:nn { ecnu / info }
+  {
+    title           .tl_set:N     = \l__ecnu_info_title_tl,
+    titleEN         .tl_set:N     = \l__ecnu_info_titleEN_tl,
+    author          .tl_set:N     = \l__ecnu_info_author_tl,
+    studentID       .tl_set:N     = \l__ecnu_info_studentID_tl,
+    department      .tl_set:N     = \l__ecnu_info_department_tl,
+    major           .tl_set:N     = \l__ecnu_info_major_tl,
+    supervisor      .tl_set:N     = \l__ecnu_info_supervisor_tl,
+    academicTitle   .tl_set:N     = \l__ecnu_info_academicTitle_tl,
+    keywords        .clist_set:N  = \l__ecnu_info_keywords_clist,
+    keywordsEN      .clist_set:N  = \l__ecnu_info_keywordsEN_clist,
+    year            .int_set:N    = \l__ecnu_info_year_int,
+    month           .int_set:N    = \l__ecnu_info_month_int,
+    graduationYear  .int_set:N    = \l__ecnu_info_graduation_year_int,
+  }
+\NewDocumentCommand \theyear { }
+  {
+    \int_compare:nNnTF { \l__ecnu_info_year_int } = { \c_zero_int }
+      { \int_set_eq:NN \l__ecnu_info_year_int \c_sys_year_int }
+      { }
+    \int_use:N \l__ecnu_info_year_int
+  }
+\NewDocumentCommand \themonth { }
+  {
+    \int_compare:nNnTF { \l__ecnu_info_month_int } = { \c_zero_int }
+      { \int_set_eq:NN \l__ecnu_info_month_int \c_sys_month_int }
+      { }
+    \int_use:N \l__ecnu_info_month_int
+  }
+\NewDocumentCommand \graduationYear { }
+  {
+    \int_compare:nNnTF { \l__ecnu_info_graduation_year_int } = { \c_zero_int }
+      {
+        \int_compare:nNnTF { \l__ecnu_info_year_int } = { \c_zero_int }
+          {
+            \int_set_eq:NN  \l__ecnu_info_graduation_year_int
+                            \c_sys_year_int
+          }
+          {
+            \int_set_eq:NN  \l__ecnu_info_graduation_year_int
+                            \l__ecnu_info_year_int
+          }
+      }
+      { }
+    \int_use:N  \l__ecnu_info_graduation_year_int
+  }
 \cs_new_protected:Npn \__ecnu_spread_box:nn #1#2
   {
     \mode_leave_vertical:
@@ -798,7 +668,7 @@
     \mode_leave_vertical:
     \hbox_to_wd:nn {#1} { \hfil #2 \hfil }
   }
-\cs_generate_variant:Nn \__ecnu_center_box:nn  { Vn }
+\cs_generate_variant:Nn \__ecnu_center_box:nn { Vn }
 \cs_new:Npn \__ecnu_fixed_width_box:nn #1#2
   { \parbox {#1} {#2} }
 \cs_new:Npn \__ecnu_fixed_width_center_box:nn #1#2
@@ -809,45 +679,6 @@
     \dim_set:Nn #1 { \box_wd:N \l__ecnu_tmpa_box }
   }
 \cs_generate_variant:Nn \__ecnu_get_text_width:Nn { NV }
-\tl_new:N \l__ecnu_header_center_mark_tl
-\cs_new_protected:Npn \__ecnu_chapter:n #1
-  {
-    \group_begin:
-      \ctexset { chapter / numbering = false }
-      \chapter* {#1}
-    \group_end:
-  }
-\cs_new_protected:Npn \__ecnu_title:n #1
-  {
-    \group_begin:
-      \ctexset 
-        { 
-          chapter / numbering = false,
-          chapter / format    = \sffamily\bfseries\centering,
-          chapter / titleformat = \zihao{-3},
-          chapter / beforeskip  = 7.125 bp,
-          chapter / afterskip   = 7.125 bp,
-        }
-      \chapter* {#1}
-    \group_end:
-  }
-\cs_new_protected:Npn \__ecnu_toc_title:n #1
-  {
-    \group_begin:
-      \ctexset 
-        { 
-          chapter / numbering = false,
-          chapter / format    = \rmfamily\bfseries\centering,
-          chapter / titleformat = \zihao{-4},
-        }
-      \chapter* {#1}
-    \group_end:
-  }
-\cs_generate_variant:Nn \__ecnu_chapter:n { V }
-\cs_generate_variant:Nn \__ecnu_title:n { V }
-\cs_generate_variant:Nn \__ecnu_toc_title:n { V }
-\cs_new:Npn \__ecnu_blank_underline:n #1
-  { \rule [ -0.5 ex ] {#1} { 0.4 pt } }
 \cs_new:Npn \__ecnu_line_spread:N #1
   { \linespread { \fp_use:N #1 } \selectfont }
 \cs_new:Npn \__ecnu_line_spread:n #1
@@ -859,7 +690,6 @@
 \tl_const:Nn \c__ecnu_info_supervisor_tl    { 指导教师   }
 \tl_const:Nn \c__ecnu_info_academicTitle_tl { 职称      }
 \tl_const:Nn \c__ecnu_schoolNum_tl          { 学校代码   }
-\tl_const:Nn \c__ecnu_colon_tl              { ： }
 \tl_const:Nn \c__ecnu_year_tl               { 年 }
 \tl_const:Nn \c__ecnu_month_tl              { 月 }
 \tl_const:Nn \c__ecnu_day_tl                { 日 }
@@ -891,7 +721,23 @@
     手段保存论文和汇编本学位论文。\par
     保密的毕业论文（设计）在解密后应遵守此规定。
   }
-%% 封面各部件的封装
+\tl_const:Nn \c__ecnu_name_toc_tl          { 目录 }
+\tl_const:Nn \c__ecnu_name_abstract_tl     { 摘要 }
+\tl_const:Nn \c__ecnu_name_abstractEN_tl   { Abstract }
+\tl_const:Nn \c__ecnu_name_keywords_tl     { 关键词 }
+\tl_const:Nn \c__ecnu_name_keywordsEN_tl   { Keywords }
+\tl_const:Nn \c__ecnu_colon_tl             { ： }
+\tl_const:Nn \c__ecnu_name_appendix_tl  { 附录 }
+\tl_const:Nn \c__ecnu_name_acknowledgement_tl  { 致谢 }
+\cs_new_protected:Npn \__ecnu_cover_id:
+  {
+    \__ecnu_fixed_width_box:nn { \textwidth }
+      {
+        \bfseries\zihao { 4 }
+        \graduationYear \c__ecnu_thesisInfo_tl \hfill
+        \c__ecnu_schoolNum_tl \c__ecnu_colon_tl \underline{10269}
+      }
+  }
 \cs_new_protected:Npn \__ecnu_orig_sign_area:
   {
     \c__ecnu_orig_sign_tl \c__ecnu_colon_tl
@@ -951,24 +797,13 @@
       \skip_vertical:n { 1 ex }
     \end{minipage}
   }
-\cs_new_protected:Npn \__ecnu_cover_id:
-  {
-    \__ecnu_fixed_width_box:nn { \textwidth }
-      {
-        \bfseries\zihao { 4 }
-        \graduationYear \c__ecnu_thesisInfo_tl \hfill
-        \c__ecnu_schoolNum_tl \c__ecnu_colon_tl \underline{10269}
-      }
-  }
-%% logo图导入接口
 \tl_new:N \l__ecnu_logo_resource_tl
 \keys_define:nn { ecnu / style }
   {
     logoResource .tl_set:N = \l__ecnu_logo_resource_tl
   }
-
 \cs_new_protected:Npn \__ecnu_cover_logo:
-  { 
+  {
     \tl_if_empty:NF \l__ecnu_logo_resource_tl
       {
         \begin{minipage} [ c ] { \textwidth }
@@ -977,7 +812,6 @@
         \end{minipage}
       }
   }
-% 封面接口
 \tl_new:N \l__ecnu_cover_template_tl
 \DeclareObjectType { ecnu / cover } { \c_zero_int }
 \cs_new_protected:Npn \__ecnu_cover_declare_template_interface:nn #1#2
@@ -1049,7 +883,7 @@
             { \exp_not:n { \group_begin: ##1 \group_end: } }
       },
   }
-\cs_new_protected:Npn \ecnu_cover_declare_template:nn #1#2
+\cs_new_protected:Npn \__ecnu_cover_declare_template:nn #1#2
   {
     \tl_set:Nn \l__ecnu_cover_template_tl {#1}
     \__ecnu_cover_declare_template_interface:nx {#1}
@@ -1079,7 +913,7 @@
         \AssignTemplateKeys
         \tl_use:c        { l__ecnu_cover / #1 / format_tl }
         \clist_map_inline:nn {#2}
-          { 
+          {
             \noindent
             \use:c { __ecnu_cover / #1 / ####1 / align:n }
               {
@@ -1094,7 +928,7 @@
       }
   }
 \NewDocumentCommand \DeclareCoverTemplate { m m }
-  { \ecnu_cover_declare_template:nn {#1} {#2} }
+  { \__ecnu_cover_declare_template:nn {#1} {#2} }
 \DeclareCoverTemplate { cover-i   }
   { id, logo, title, titleEN, info }
 \DeclareCoverTemplate { cover-ii  }
@@ -1115,11 +949,11 @@
     logo     / content     = \__ecnu_cover_logo:,
     title    / content     =
       \__ecnu_fixed_width_center_box:nn
-        { 0.9 \textwidth } 
-        { \uline{\l__ecnu_info_title_tl} },
-    titleEN  / content     = 
+        { 0.9 \textwidth }
+        { \expandafter\uline\expandafter{\l__ecnu_info_title_tl} },
+    titleEN  / content     =
       \__ecnu_fixed_width_center_box:nn
-        { 0.9 \textwidth } 
+        { 0.9 \textwidth }
         { \expandafter\uline\expandafter{\l__ecnu_info_titleEN_tl} },
     info     / content     = \__ecnu_cover_info:,
     title    / format      = \__ecnu_line_spread:n { 1.1 } \zihao { 1 } \bfseries,
@@ -1167,148 +1001,6 @@
         \RequirePackage { pdfpages }
       },
   }
-% 中英文摘要
-\tl_const:Nn \c__ecnu_name_abstract_tl    { 摘要 }
-\tl_const:Nn \c__ecnu_name_keywords_tl    { 关键词 }
-\tl_const:Nn \c__ecnu_name_abstractEN_tl  { Abstract }
-\tl_const:Nn \c__ecnu_name_keywordsEN_tl  { Keywords }
-\tl_const:Nn \c__ecnu_comma_tl            { , }
-\cs_new_protected:Npn \__ecnu_keywords:nNn #1#2#3
-  {
-    \par \mode_leave_vertical: \par \noindent
-    \__ecnu_get_text_width:Nn \l__ecnu_tmpa_dim {#1}
-    \group_begin: #1 \group_end:
-    \parbox [t] { \dim_eval:n { \textwidth - \l__ecnu_tmpa_dim } }
-      {
-        \clist_use:Nn #2 {#3} \par
-        \cs_gset:Npx \__ecnu_keywords_prevdepth: { \dim_use:N \tex_prevdepth:D }
-      }
-  }
-\RenewDocumentEnvironment { abstract } { }
-  { \__ecnu_abstract_begin:    } { \__ecnu_abstract_end:      }
-\NewDocumentEnvironment { abstractEN  } { }
-  { \__ecnu_abstractEN_begin:    } { \__ecnu_abstractEN_end:      }
-\cs_new_protected:Npn \__ecnu_abstract_begin:
-  { 
-    \phantomsection
-    \addcontentsline{toc}{chapter}{摘要}
-    \__ecnu_title:V \l__ecnu_info_title_tl
-    \mode_leave_vertical: \par \noindent
-    \zihao{5}
-    \group_begin: 
-      \rmfamily\bfseries \c__ecnu_name_abstract_tl \c__ecnu_colon_tl
-    \group_end:
-    \par
-  }
-\cs_new_protected:Npn \__ecnu_abstractEN_begin:
-  { 
-    \phantomsection
-    \addcontentsline{toc}{chapter}{ABSTRACT}
-    \__ecnu_title:V { \rmfamily\bfseries \l__ecnu_info_titleEN_tl }
-    \mode_leave_vertical: \par \noindent
-    \zihao{5}
-    \group_begin: 
-      \rmfamily\bfseries \c__ecnu_name_abstractEN_tl \c__ecnu_colon_tl
-    \group_end:
-    \par
-  }
-\cs_new_protected:Npn \__ecnu_abstract_end:
-  {
-    \__ecnu_keywords:nNn
-      { \rmfamily\bfseries \c__ecnu_name_keywords_tl \c__ecnu_colon_tl }
-      \l__ecnu_info_keywords_clist { ， }
-    \clearpage{\thispagestyle{empty}\cleardoublepage}
-  }
-\cs_new_protected:Npn \__ecnu_abstractEN_end:
-  {
-    \__ecnu_keywords:nNn
-      { \rmfamily\bfseries \c__ecnu_name_keywordsEN_tl \c__ecnu_colon_tl }
-      \l__ecnu_info_keywordsEN_clist { ,~ }
-    \clearpage{\thispagestyle{empty}\cleardoublepage}
-  }
-% 目录
-\setcounter{tocdepth}{1}
-\tl_const:Nn \c__ecnu_name_toc_tl { 目录 }
-\cs_new_protected:Npn \__ecnu_patch_cmd:Nnn #1#2#3
-  {
-    \ctex_patch_cmd_once:NnnnTF #1 { } {#2} {#3}
-      { } { \ctex_patch_failure:N #1 }
-  }
-\keys_set:nn { ctex }
-  {
-    contentsname   = \c__ecnu_name_toc_tl,
-  }
-\cs_set:Npn \tableofcontents 
-  {
-    \__ecnu_toc_title:V \contentsname
-    \group_begin:
-    \__ecnu_line_spread:n {1.2}
-      \@starttoc{toc}
-    \group_end:
-    \clearpage{\thispagestyle{empty}\cleardoublepage}
-  }
-% 目录具体格式
-\RenewDocumentCommand \cftchapleader { }
-  {\bfseries\cftdotfill{1.0}}
-\RenewDocumentCommand \cftsecleader { }
-  {\cftdotfill{1.0}}
-\setlength{\cftbeforechapskip}{6pt}
-\setlength{\cftchapnumwidth}{0pt}
-\setlength{\cftsecnumwidth}{0pt}
-\RenewDocumentCommand \@tocrmarg { } {0pt}
-\RenewDocumentCommand \cftchapfillnum { m }
-  {
-    {\cftchapleader}\nobreak
-    {\cftchappagefont #1}\cftchapafterpnum\par
-  }
-\RenewDocumentCommand \cftsecfillnum { m }
-  {
-    {\cftsecleader}\nobreak
-    {\cftsecpagefont #1}\cftsecafterpnum\par
-  }
-\pretocmd{\section}
-  { \ifnum\value{section}=0\addtocontents{toc}{\protect\vspace{6pt}}\fi }
-  {}{}
-
-% 附录
-\tl_const:Nn \c__ecnu_name_appendix_tl         { 附录 }
-\tl_const:Nn \c__ecnu_name_acknowledgement_tl  { 致谢 }
-\RenewDocumentEnvironment { appendix } { }
-  { \__ecnu_appendix_begin: } { \__ecnu_appendix_end: }
-\cs_new_protected:Npn \__ecnu_appendix_begin:
-  { 
-    \phantomsection
-    \addcontentsline{toc}{chapter}{\c__ecnu_name_appendix_tl}
-    \__ecnu_title:V \c__ecnu_name_appendix_tl
-    \mode_leave_vertical: \par \noindent
-    \zihao{5}
-    \par
-    \begingroup
-    \let\clearpage\relax
-    \setcounter{chapter}{0}
-    \setcounter{section}{0}
-    \addtocontents{toc}{\protect\setcounter{tocdepth}{-2}}
-  }
-\cs_new_protected:Npn \__ecnu_appendix_end:
-  {
-    \endgroup 
-    \clearpage{\thispagestyle{empty}\cleardoublepage} 
-    \addtocontents{toc}{\protect\setcounter{tocdepth}{1}}
-  }
-\NewDocumentEnvironment { acknowledgement } { }
-  { \__ecnu_acknowledgement_begin: } { \__ecnu_acknowledgement_end: }
-\cs_new_protected:Npn \__ecnu_acknowledgement_begin:
-  { 
-    \phantomsection
-    \addcontentsline{toc}{chapter}{\c__ecnu_name_acknowledgement_tl}
-    \__ecnu_title:V \c__ecnu_name_acknowledgement_tl
-    \mode_leave_vertical: \par \noindent
-    \zihao{5}
-    \par
-  }
-\cs_new_protected:Npn \__ecnu_acknowledgement_end:
-  { \clearpage{\thispagestyle{empty}\cleardoublepage} }
-% 封面命令封装
 \NewDocumentCommand \makecoveri { }
   {
     \thispagestyle { empty }
@@ -1319,7 +1011,7 @@
     \cleardoublepage
     \thispagestyle { empty }
     \tl_set:Nn \thepage { C }
-    \bool_if:NTF \g__ecnu_gen_declaration_page_bool
+    \bool_if:NTF \g__ecnu_decl_page_bool
       {
         \tl_if_empty:NTF \l__ecnu_declaration_page_tl
           { \UseInstance { ecnu / cover } { cover-ii-default } }
@@ -1327,41 +1019,206 @@
       }
       {}
   }
-% 目录命令封装
-\NewDocumentCommand \makeTOC { }
+\keys_set:nn { ctex }
   {
-    \addtocontents{toc}{\protect\thispagestyle{empty}}
-    \group_begin:
-      \pagestyle{empty}
-      \pagenumbering{roman}
-      \tableofcontents
-    \group_end:
+    contentsname  = \c__ecnu_name_toc_tl,
+    tocdepth      = 1,
   }
-
+\PassOptionsToPackage { titles } { tocloft }
+\RequirePackage { tocloft }
+\RenewDocumentCommand \cftchapleader { }
+  {\bfseries\cftdotfill{1.0}}
+\RenewDocumentCommand \cftsecleader { }
+  {\cftdotfill{1.0}}
+\setlength{\cftbeforechapskip}{6pt}
+\setlength{\cftchapnumwidth}{0pt}
+\setlength{\cftsecnumwidth}{0pt}
+\RenewDocumentCommand \@tocrmarg { } { 0pt }
+\RenewDocumentCommand \cftchapfillnum { m }
+  {
+    {\cftchapleader}\nobreak
+    {\cftchappagefont #1}\cftchapafterpnum\par
+  }
+\RenewDocumentCommand \cftsecfillnum { m }
+  {
+    {\cftsecleader}\nobreak
+    {\cftsecpagefont #1}\cftsecafterpnum\par
+  }
+\RenewDocumentCommand \tableofcontents { }
+  {
+    \pagestyle{ empty }
+    \__ecnu_toc_title:V \contentsname
+    \group_begin:
+      \__ecnu_line_spread:n {1.2}
+      \@starttoc{toc}
+    \group_end:
+    \cleardoublepage
+    \pagestyle{ fancy }
+  }
+\__ecnu_preto_cmd:Nn \section
+  {
+    \int_compare:nNnTF { \c@section } = { \c_zero_int }
+      { \addtocontents{toc}{\protect\vspace{6pt}} }
+      { }
+  }
+\RenewDocumentEnvironment { abstract  } { }
+  { \__ecnu_abstract_begin:    } { \__ecnu_abstract_end:      }
+\NewDocumentEnvironment { abstractEN } { }
+  { \__ecnu_abstractEN_begin: } { \__ecnu_abstractEN_end:   }
+\cs_new_protected:Npn \__ecnu_abstract_begin:
+  {
+    \addcontentsline{toc}{chapter}{\c__ecnu_name_abstract_tl}
+    \__ecnu_abs_title:V \l__ecnu_info_title_tl
+    \small
+    \hbox:n {} \mode_leave_vertical: \par \noindent
+    \group_begin:
+      \rmfamily\bfseries \c__ecnu_name_abstract_tl \c__ecnu_colon_tl
+    \group_end:
+    \par
+  }
+\cs_new_protected:Npn \__ecnu_abstractEN_begin:
+  {
+    \addcontentsline{toc}{chapter}{ABSTRACT}
+    \__ecnu_absEN_title:V \l__ecnu_info_titleEN_tl
+    \small
+    \hbox:n {} \mode_leave_vertical: \par \noindent
+    \group_begin:
+      \rmfamily\bfseries \c__ecnu_name_abstractEN_tl \c__ecnu_colon_tl
+    \group_end:
+    \par
+  }
+\cs_new_protected:Npn \__ecnu_abstract_end:
+  {
+    \__ecnu_keywords:nNn
+      { \rmfamily\bfseries \c__ecnu_name_keywords_tl \c__ecnu_colon_tl }
+      \l__ecnu_info_keywords_clist { ， }
+    \cleardoublepage
+  }
+\cs_new_protected:Npn \__ecnu_abstractEN_end:
+  {
+    \__ecnu_keywords:nNn
+      { \rmfamily\bfseries \c__ecnu_name_keywordsEN_tl \c__ecnu_colon_tl }
+      \l__ecnu_info_keywordsEN_clist { ,~ }
+    \cleardoublepage
+  }
+\cs_new_protected:Npn \__ecnu_keywords:nNn #1#2#3
+  {
+    \par \mode_leave_vertical: \par \noindent
+    \__ecnu_get_text_width:Nn \l__ecnu_tmpa_dim {#1}
+    \group_begin: #1 \group_end:
+    \parbox [t] { \dim_eval:n { \textwidth - \l__ecnu_tmpa_dim } }
+      {
+        \clist_use:Nn #2 {#3} \par
+        \cs_gset:Npx \__ecnu_keywords_prevdepth:
+          { \dim_use:N \tex_prevdepth:D }
+      }
+  }
+\RenewDocumentEnvironment { appendix } { }
+  { \__ecnu_appendix_begin: } { \__ecnu_appendix_end: }
+\cs_new_protected:Npn \__ecnu_appendix_begin:
+  {
+    \cleardoublepage
+    \__ecnu_title:V \c__ecnu_name_appendix_tl
+    \setcounter{chapter}{0}
+    \setcounter{section}{0}
+    \small
+  }
+\cs_new_protected:Npn \__ecnu_appendix_end:
+  {
+    \cleardoublepage
+  }
+\NewDocumentEnvironment { acknowledgement } { }
+  { \__ecnu_acknowledgement_begin: }
+  { \__ecnu_acknowledgement_end: }
+\cs_new_protected:Npn \__ecnu_acknowledgement_begin:
+  {
+    \cleardoublepage
+    \__ecnu_title:V \c__ecnu_name_acknowledgement_tl
+    \small
+  }
+\cs_new_protected:Npn \__ecnu_acknowledgement_end:
+  {
+    \cleardoublepage
+  }
+\tl_new:N \l__ecnu_bib_resource_tl
+\keys_define:nn { ecnu / style }
+  {
+    bibResource .tl_set:N = \l__ecnu_bib_resource_tl
+  }
+\__ecnu_gadd_ltxhook:nn { env/document/begin }
+{
+  \__ecnu_biblatex_pre_setup:
+  \RequirePackage { biblatex }
+  \__ecnu_biblatex_post_setup:
+}
+\cs_new_protected:Npn \__ecnu_biblatex_pre_setup:
+  {
+    \PassOptionsToPackage
+    {
+      backend   = biber,
+      style     = gb7714-2015,
+      seconds   = true,
+      hyperref  = true,
+      gbpub     = false,
+      gbpunctin = false,
+    }
+    { biblatex }
+  }
+\cs_new_protected:Npn \__ecnu_biblatex_post_setup:
+  {
+    \exp_args:NV \addbibresource \l__ecnu_bib_resource_tl
+    \__ecnu_biblatex_allow_url_break:
+    \RenewDocumentCommand \bibfont { } { \small }
+    \setlength{\bibitemsep}{0pt}
+    \defbibheading { bibliography } [ \bibname ]
+      { \__ecnu_title:n {##1} }
+  }
+\cs_new:Npn \__ecnu_biblatex_allow_url_break:
+  {
+    \int_set_eq:NN \c@biburlucpenalty  \c_one_int
+    \int_set_eq:NN \c@biburlnumpenalty \c_one_int
+    \int_set_eq:NN \c@biburllcpenalty  \c_one_int
+  }
+\NewDocumentCommand \PrintReference {}
+  {
+    \printbibliography
+    \cleardoublepage
+  }
+\PassOptionsToPackage { hidelinks, hypertexnames=false } { hyperref }
+\RequirePackage { hyperref }
 \AtBeginDocument
   {
     \newgeometry
       {
-        top     = 2.0 cm, 
+        top     = 2.0 cm,
         bottom  = 2.0 cm,
-        left    = 3.0 cm, 
+        left    = 3.0 cm,
         right   = 3.0 cm
       }
     \begin{titlepage}
       \makecoveri \newpage \makecoverii
     \end{titlepage}
     \restoregeometry
-    \makeTOC
   }
-
+\keys_define:nn { ecnu }
+  {
+    info  .meta:nn = { ecnu / info  } {#1},
+    style .meta:nn = { ecnu / style } {#1}
+  }
+\NewDocumentCommand \ecnuSetup { m }
+  { \keys_set:nn { ecnu } {#1} }
 \NewDocumentCommand \frontmatter { }
   { \cleardoublepage\pagenumbering{Roman} }
 \NewDocumentCommand \mainmatter { }
   { \cleardoublepage\pagenumbering{arabic} }
 \NewDocumentCommand \backmatter { }
   { \clearpage{\thispagestyle{empty}\cleardoublepage} }
-
-
+\keys_set:nn { ecnu / style }
+  {
+    font      = xits,
+    fontCJK   = fandol,
+    numbering = arabic,
+  }
 \keys_set:nn { ecnu / info }
   {
     title           = {(中文标题)},
@@ -1375,23 +1232,6 @@
     keywords        = {关键词1, 关键词2, 关键词3},
     keywordsEN      = {keyword1, keyword2, keyword3}
   }
-\keys_set:nn { ecnu / style }
-  {
-    footnote     = plain,
-    numbering    = arabic,
-    fontCJK      = fandol,
-    fontMath     = lm,
-    bibResource  = {},
-    logoResource = {},
-  }
-
-% 提供接口
-\keys_define:nn { ecnu }
-  {
-    info    .meta:nn = { ecnu / info } {#1},
-    style   .meta:nn = { ecnu / style } {#1},
-  }
-\DeclareDocumentCommand \ecnuSetup { m } 
-  { \keys_set:nn { ecnu } { #1 } }
+\endinput
 %%
 %% End of file `ecnuthesis.cls'.

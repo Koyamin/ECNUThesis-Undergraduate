@@ -41,6 +41,7 @@
 ## 参考
 
 - Kunth D E. 的 The TeXBook: Computers & Typesetting.
+- Victor Eijkhout 的 [TEX BY TOPIC, A TEXNICIAN’S REFERENCE](https://ctan.org/pkg/texbytopic)
 - CTEX.ORG 的 CTeX 宏集手册
 - CTEX.ORG 的 xeCJK 宏包
 - The LaTeX3 Project 的 The LaTeX3 Sources
@@ -49,6 +50,6 @@
 
 ## 软件许可证
 
-华东师范大学校徽图案 (`inner-cover(contains_font).eps`) 版权归华东师范大学所有。
+华东师范大学校徽图案版权归华东师范大学所有。
 
 其他部分使用 LPPL 授权。
